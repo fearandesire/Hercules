@@ -3,7 +3,6 @@
 
   &#xa0;
 
-  <!-- <a href="https://src.netlify.app">Demo</a> -->
 </div>
 
 <h1 align="center">Hercules</h1>
@@ -25,7 +24,7 @@
 
 
 <h4 align="center"> 
-	🚧  Hercules  🚀 Under construction...  🚧
+	<!-- 🚧  Hercules  🚀 Under construction...  🚧 -->
 </h4> 
 
 <hr> 
@@ -85,6 +84,8 @@ You can view the [Change Log here](ChangeLog.md)
 These notes are mainly intended for fellow staff at NBAC for the future & beyond.
 
 After downloading the latest [Release](https://github.com/fearandesire/Hercules/releases), please do the following:
+<br/>
+<br/>
 Run: ```npm init``` in terminal/directory of Hercules
 
 
