@@ -23,8 +23,8 @@
 
 
 
-<h4 align="center"> 
-	<!-- 🚧  Hercules  🚀 Under construction...  🚧 -->
+<h4 align="center">
+	<!-- 🚧  Hercules  🚀 Under construction.  🚧 -->
 </h4> 
 
 <hr> 
