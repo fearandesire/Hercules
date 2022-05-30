@@ -1,20 +1,20 @@
 import {
-  Command
+    Command
 } from "@sapphire/framework";
 import {
-  container
+    container
 } from '@sapphire/pieces';
 import {
-  bold,
-  green,
-  logthis,
-  red
+    bold,
+    green,
+    logthis,
+    red
 } from "../../lib/hercConfig.js";
 import {
-  AddToUsageStats
+    AddToUsageStats
 } from '../../utils/SQL/AddToUsageStats.js';
-const GameSchedule2 = container.GameSchedule2
-const GameScheduleManager = container.cronhandler;
+const OBJCrgameSched = container.OBJCrgameSched
+const GameScheduleManager = container.hercGameSchedMngr;
 export class DeleteScheduledGame extends Command {
   constructor(context, options) {
     super(context, {
@@ -35,7 +35,7 @@ export class DeleteScheduledGame extends Command {
     AddToUsageStats(userid, SQLTargetTable, commandname)
     //* -------------- */
     const text = await args.rest('string').catch(() => null);
-    var selectedScheduledGame = GameSchedule2[`${text}`]
+    var selectedScheduledGame = OBJCrgameSched[`${text}`]
     logthis(red(bold(`[Game Scheduling] Removing: ${selectedScheduledGame} from the Game Schedule`)))
     try {
       message.reply(`Deleted: '${selectedScheduledGame}' from today's channel scheduling.`)

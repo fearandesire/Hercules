@@ -6,13 +6,12 @@ import {
   logthis
 } from '../lib/hercConfig.js';
 
-export function GrabTimeNoPM(time){
+export function FormatGameTime(time){
   logthis(cyanBright(bold((`[Game Scheduling] RECEIVED TIME: ${time}`))))
   //? Removing the PM from any time at 12:00 so it can convert to 24HR format without an error.
   if (time.substring(0, 2) == 12){
     time = time.slice(0, -2)
   }
-  //  const newTime = _12FromTo24Hours(time)
   //? The time the game starts (includes AM/PM) - not yet manipulated.
     container.storedOGTime = time;
     //? Splitting time to manipulate

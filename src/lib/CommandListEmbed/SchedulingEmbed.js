@@ -6,7 +6,7 @@ export function usermodScheduling(message){
     const usrmodSchEmbed = new MessageEmbed()
         .setTitle("Scheduling Commands")
         .setThumbnail('https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif')
-        .setColor("#00FFFF")
+        .setColor("#ff1100")
         .addFields(
             
             {   name: "$quegames *or* $qg",   value: "Schedules any game due today.", inline: true },

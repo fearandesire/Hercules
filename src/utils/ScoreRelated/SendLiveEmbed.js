@@ -1,17 +1,17 @@
 import {
-    yellow
+  yellow
 } from 'colorette';
 import {
-    MessageEmbed
+  MessageEmbed
 } from 'discord.js';
 import {
-    SapDiscClient
+  SapDiscClient
 } from '../../Hercules.js';
 import {
-    bold
+  bold
 } from '../../lib/hercConfig.js';
 import {
-    SortScoreEmbedColor
+  SortScoreEmbedColor
 } from '../SortScoreEmbedColor.js';
 /**
  @SendGameScore - If the scraped game is Live, Hercules will respond with the Live information for said game -- also making the Embed color the winning teams primary color for pretty formatting.
@@ -25,7 +25,7 @@ import {
    //? Converting first letter to uppercase for display
    const ChanId = CurrentChanId;
    const sendPing = await SapDiscClient.channels.fetch(ChanId)
-   var livescoreFooter = `Hercules Bot - Developed By Fenix#7559`
+   var livescoreFooter = `Type $help to learn more commands. Developed By Fenix#7559`
    sendPing.send(`<@${UserRequestedID}>`)
    var EmbedLiveScoreTitle = `**${awayTeamEmoji} ${AwayTeam} ${AwScore} - ${HomeTeam} ${HScore} ${homeTeamEmoji}**`;
    var EmbedMsgLive = `:green_circle: **Current Quarter**:`

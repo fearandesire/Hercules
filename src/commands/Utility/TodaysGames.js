@@ -11,6 +11,7 @@ import {
 import {
   MessageAttachment
 } from "discord.js";
+import { SendEmbedResp } from '../../utils/SQL/Embeds/SendEmbed.js';
 export class todaysgames extends Command {
   constructor(context, options) {
     super(context, {
@@ -27,6 +28,12 @@ export class todaysgames extends Command {
     if (ratelimit.limited) {
       message.reply("There is a 5 second cooldown for this command.");
       return;
+    }
+    if (container.scheduleValidated === 'false'){
+    var embedTitle = 'Schedule Info'
+    var embedText = 'There are no games on the schedule today.'
+    SendEmbedResp(message, embedTitle, embedText)
+    return;
     }
     //* -------------- */
     //* Adding to usage stats

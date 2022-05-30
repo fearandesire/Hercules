@@ -4,16 +4,11 @@ import {
 import {
     SapDiscClient
 } from '../../Hercules.js';
-import {
-    bold,
-    red,
-    logthis
-} from '../../lib/hercConfig.js'
 
 export function CreateNow(message, chanName, teamArray, team1, team2, GameParent, GameChatTopic) {
     const client = SapDiscClient
     const crmanager = container.crmngr;
-    const GameScheduleManager = container.cronhandler;
+    const GameScheduleManager = container.hercGameSchedMngr;
     const timestamp = new Date();
     let currentseconds = timestamp.getSeconds();
     let currentminutes = timestamp.getMinutes();
@@ -26,10 +21,7 @@ export function CreateNow(message, chanName, teamArray, team1, team2, GameParent
         "** now. *Please wait 5 seconds*. "
     );
     container.createGameTimes.push(crtime)
-    console.log(container.createGameTimes)
-    GameScheduleManager.add(chanName, `${foursecondsahead} ${currentminutes} ${currenthour} * * *`, () => {
-        logthis(red(bold(`Added created game ${chanName} to the Game Schedule Manager`)))
-    })
+   // console.log(container.createGameTimes)
     crmanager.add(chanName, `${foursecondsahead} ${currentminutes} ${currenthour} * * *`, () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const createdChannel = message.guild.channels

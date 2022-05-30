@@ -38,5 +38,16 @@ Simple & || or self-explainatory files will either be skipped or briefly mention
 
 
 
+## Daily Operations ##
+
+Hercules has a total of 4 schdeuled daily tasks.
+
+Hercules will collect:
++ Standings (Image)
++ Schedule (Image)
+
+Hercules will schedule:
++ Game Channels
++ Deletion of Game Channels
 
 

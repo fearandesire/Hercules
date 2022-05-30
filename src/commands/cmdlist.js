@@ -55,6 +55,7 @@ export class cmdlist extends Command {
     }
     if (InputLowerCase === "about") {
       AboutEmbed(message)
+      return;
     }
     if (InputLowerCase === "whatsnew") {
       WhatsNewGithubCall(message)

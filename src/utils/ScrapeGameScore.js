@@ -23,7 +23,7 @@ import {
 } from './ScoreRelated/SendLiveEmbed.js';
 
 //* Using Puppeteer: I scrape Google's Score API to get an accurate read on live game scores.
-//* Working on increasing the response time. As it currently stands at around ~2.5 seconds. We are spoiled as a society.
+//* Working on increasing the response time. As it currently stands at around ~3 seconds. We are spoiled as a society.
 //* --------------------------------- */
 /** 
  

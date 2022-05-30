@@ -4,7 +4,7 @@ export const timestamp = new Date();
 export const nbagamehours = [];
 export const gameobj = {};
 export const nbagameinfo = {};
-export const gameArray = [];
+export const gameSchedList = [];
 export const gameArrayDelete = []; 
 export const LineupResponse = [];
 
@@ -25,7 +25,7 @@ container.TodayDayOfWeek = TodayDayOfWeek
 //     nbagamehours,
 //     gameobj,
 //     nbagameinfo,
-//     gameArray,
+//     gameSchedList,
 //     gameArrayDelete,
 //     LineupResponse,
 //     currentminutes,

@@ -22,14 +22,18 @@ export const app = express();
 app.listen(4006, () =>
   console.log('App listening on port 4006!'),
 );
+
 /**
- * @screenshotTodaysNBAGames Screenshots ESPN daily NBA schedule. Response/Image can be viewed with the $tg (TodaysGames) command
+ - @screenshotTodaysNBAGames Screenshots ESPN daily NBA schedule. Response/Image can be viewed with the $tg (TodaysGames) command.
+ - @container.scheduleValidated -- A Global Container/Variable that is used to verify if Hercules was successful in collecting the Game Schedule Image.
+   Hercules scrapes from the table that contains the NBA Games on ESPN ( DIV: @GameTable ). If it fails to do so, it's likely that there are no games going on for that day.
  */
+
 export async function screenshotTodaysNBAGames(SSTodaysGames, msg) {
-  async function SendGameStandingsComplete() {
+  async function SendSuccessfulEmbed() {
     var bChannel = container.dbVal[`botChannel`]
     var embedTitle = 'Daily Game Schedule'
-    var embedText = 'The NBA schedule has been downloaded. Type $tg to view.'
+    var embedText = 'The NBA schedule has been collected. Type $tg to view.'
     var targetChannel = bChannel
     SendEmbedRespToChannel(embedTitle, embedText, targetChannel)
     return;
@@ -62,10 +66,11 @@ export async function screenshotTodaysNBAGames(SSTodaysGames, msg) {
         'path': '../src/gameimages/tgnba.jpg',
       });
       await browserSG.close();
-      logthis(cyanBright("Done - Today's NBA schedule has been downloaded."))
-      SendGameStandingsComplete();
-
+      logthis(cyanBright("Done - Today's NBA schedule has been collected."))
+      SendSuccessfulEmbed();
+      container.scheduleValidated = 'true';
     } catch (error) {
+      container.scheduleValidated = 'false';
       console.log('[DEBUGGING] ERROR when screenshoting game schedule - - Likely there are no Games scheduled today.')
       var bChannel = container.dbVal[`botChannel`]
       var embedText = 'There are no NBA Games on the schedule today.'
@@ -79,7 +84,7 @@ export async function screenshotTodaysNBAGames(SSTodaysGames, msg) {
   }
   runSG().then(() => {
     if (msg != undefined) {
-      msg.edit(`Schedule Image gathered.`)
+      msg.edit(`Schedule Image collected.`)
     }
   })
 }

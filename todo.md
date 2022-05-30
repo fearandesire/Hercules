@@ -4,6 +4,7 @@
 [√] Improved fail-safe Scheduling
 [√] Revamped Score
 [ ] Player Stats, Bio
+[ ] Team Record for the season
 
 ## Desired features/functions
 [!] Playoff Matchup Score
@@ -35,5 +36,5 @@
 [ ] - Include the .env requirement with startup instructions on Git for Hercules, and more
 [√] - Implement NBAC Database .js files
 [√]  Put SQL login data into an .env
-[!]  Convert all Hercules channel msg replys to Embed Responses
+[√]  Convert all Hercules channel msg replys to Embed Responses
 - $CR with CUSTOM Delete Time

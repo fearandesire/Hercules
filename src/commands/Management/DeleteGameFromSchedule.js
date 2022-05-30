@@ -13,8 +13,8 @@ import {
 import {
   AddToUsageStats
 } from '../../utils/SQL/AddToUsageStats.js';
-const GameSchedule = container.GameSchedule
-const GameScheduleManager = container.cronhandler;
+const OBJgameSched = container.OBJgameSched
+const GameScheduleManager = container.hercGameSchedMngr;
 export class DeleteScheduledGame extends Command {
   constructor(context, options) {
     super(context, {
@@ -35,7 +35,7 @@ export class DeleteScheduledGame extends Command {
     AddToUsageStats(userid, SQLTargetTable, commandname)
     //* -------------- */
     const text = await args.rest('string').catch(() => null);
-    var selectedScheduledGame = GameSchedule[`${text}`]
+    var selectedScheduledGame = OBJgameSched[`${text}`]
     logthis(red(bold(`[Game Scheduling] Removing: ${selectedScheduledGame} from the Game Schedule`)))
     try {
       message.reply(`Deleted: '${selectedScheduledGame}' from today's channel scheduling.`)

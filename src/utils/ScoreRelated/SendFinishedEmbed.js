@@ -1,19 +1,19 @@
 import {
-    green,
-    yellow
+  green,
+  yellow
 } from 'colorette';
 import {
-    MessageEmbed
+  MessageEmbed
 } from 'discord.js';
 import {
-    SapDiscClient
+  SapDiscClient
 } from '../../Hercules.js';
 import {
-    bold
+  bold
 } from '../../lib/hercConfig.js';
 import {
-    SortScoreEmbedColor,
-    WhoWon
+  SortScoreEmbedColor,
+  WhoWon
 } from '../SortScoreEmbedColor.js';
   
 
@@ -29,7 +29,7 @@ import {
    //var AdditionalLine = "Who did you have to win?"
    const ChanId = CurrentChanId;
    const sendPing = await SapDiscClient.channels.fetch(ChanId)
-   var finishedfooter = `Type $help to learn more commands. Hercules - Developed By Fenix#7559`
+   var finishedfooter = `Type $help to learn more commands. Developed By Fenix#7559`
    //? For some reason, 
    sendPing.send(`<@${UserRequestedID}>`)
    var EmbedTitle = `**${awayTeamEmoji} ${AwayTeam} ${AwScore} - ${HomeTeam} ${HScore} ${homeTeamEmoji}**`;

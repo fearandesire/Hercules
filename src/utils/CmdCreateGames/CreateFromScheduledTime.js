@@ -4,11 +4,7 @@ import {
 import {
     SapDiscClient
 } from '../../Hercules.js';
-import {
-    yellow,
-    logthis
-} from '../../lib/hercConfig.js'
-import _12FromTo24Hours from '12fromto24hours';
+import { SendEmbedResp } from '../SQL/Embeds/SendEmbed.js';
 export function CreateFromScheduledTime(message, args, GameCount, GameChanMsg, team1, team2, time) {
     //console.log(LGT2)
     const isCrRan = container.crRan;
@@ -27,9 +23,9 @@ export function CreateFromScheduledTime(message, args, GameCount, GameChanMsg, t
     const mins = timesplit[1];
     const hours = timesplit[0];
     //* Array for displaying the current games scheduled with $ls
-    const GameSchedule2Array = container.GameSchedule2Array
+    const CrSchedList = container.CrSchedList
     //* Game Channel Titles will be placed in this object with an incrementing number, that way we can delete the games easy.
-    const GameSchedule2 = container.GameSchedule2
+    const OBJCrgameSched = container.OBJCrgameSched
     const GameParent = DatabaseEntry[`GameParent`]
     const GameChatTopic = DatabaseEntry[`GameChanTopic`]
     //! Converting into 24:00 Hour Time Format
@@ -40,21 +36,18 @@ export function CreateFromScheduledTime(message, args, GameCount, GameChanMsg, t
     const title = `${team1}-vs-${team2}`;
     const chanName = `${team1} vs ${team2}`
     const requestedTimeCronFormat = `${mins} ${convertedhour} * * *`
-    const preConverted = `${hours}${mins}`
-    message.channel.send(
-        `Creating channel: ` +
-        title.toLowerCase() +
-        " at " +
-        time
-    );
+    //const preConverted = `${hours}${mins}`
+    var embedTitle = 'Schedule Management';
+    var embedText = `Creating channel: ${title.toLowerCase()} at  ${time}`;
+    SendEmbedResp(message, embedTitle, embedText)
     GameCount++;
     //* Assigning an incrementing number per $creategame so we can have an easy way to delete them from the schedule if needed.
     const FormattedArrayTitle = `${chanName} opening at: ${time}`
-    GameSchedule2[`${GameCount}`] = title
+    OBJCrgameSched[`${GameCount}`] = title
     //* Pushing the Game/Channel Name to an array for displaying.
-    GameSchedule2Array.push(FormattedArrayTitle)
-    container.createGameTimes.push(preConverted)
-    console.log(container.createGameTimes)
+    CrSchedList.push(FormattedArrayTitle)
+    //container.createGameTimes.push(preConverted)
+    //console.log(container.createGameTimes)
     crmanager.add(`${title}`, requestedTimeCronFormat, () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const createdChannelv2 = message.guild.channels

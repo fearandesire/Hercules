@@ -4,9 +4,7 @@ import {
 import {
     MessageEmbed
 } from 'discord.js';
-const nbaclogo =
-    "https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif";
-const herculesfulllogo = 'https://cdn.discordapp.com/attachments/515598020818239491/975843360453578852/HerculesLogo.png?size=4096'
+import { herculesfulllogo, nbaclogo } from '../hercConfig.js';
 
 export function AboutEmbed(message) {
     var dbAboutEmbedFeatures = container.dbVal[`features`];

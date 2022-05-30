@@ -1,10 +1,10 @@
 
 import {
     Command
-  } from '@sapphire/framework';
-  import {
+} from '@sapphire/framework';
+import {
     container
-  } from '@sapphire/pieces';
+} from '@sapphire/pieces';
   export class ClearGames extends Command {
     constructor(context, options) {
       super(context, {
@@ -18,8 +18,8 @@ import {
   
     async messageRun(message) {
         var msg = await message.reply(`Clearing all scheduled games.`)
-        var scheduleManager = container.cronhandler;
-        var DeleteManager = container.cronhandler2;
+        var scheduleManager = container.hercGameSchedMngr;
+        var DeleteManager = container.deleteGameMngr;
         var CreatedGameManager = container.crmngr;
         scheduleManager.stopAll();
         DeleteManager.stopAll();

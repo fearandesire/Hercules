@@ -29,7 +29,6 @@ export class CreateGames extends Command {
     const DatabaseEntry = container.dbVal;
     const GameParent = DatabaseEntry[`GameParent`]
     const GameChatTopic = DatabaseEntry[`GameChanTopic`]
-    //* -------------- */
     //* Adding to usage stats
     var userid = message.author.id
     var SQLTargetTable = `creategamestats`

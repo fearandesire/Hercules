@@ -22,9 +22,9 @@ export {
     currentminutes,
     currentseconds,
     daysInTheWeek,
-    gameArray,
     gameArrayDelete,
     gameobj,
+    gameSchedList,
     LineupResponse,
     nbagamehours,
     nbagameinfo,
@@ -58,48 +58,62 @@ export const cborder = `    =========          =========          =========    `
 container.dbValue = {};
 container.rateinfo = new RateLimitManager(5000, 1);
 
-/* ------------------------------------------------------------------------------------------------------------------------------------------------ */
-//? Cron timers related to game scheduling
+
+//* CRON JOB MANAGERS »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» */
+//? Cron Manager to cancel scheduled games.
+/**
+ - @hercGameSchedMngr - auto/daily game scheduling Hercules handles itself
+ - @deleteGameMngr - auto game channel deletion Manager
+ - @predictorMngr - prediction channel manager
+ - @scrubmanager - not yet used yet
+ - @crmngr - manager for games manually created with $cr
+ - @dailyStandings - daily screenshotting of the ESPN Standings
+ - @dailyGameSS daily screenshotting of the ESPN Game Schedule
+ */
+container.hercGameSchedMngr = new CronJobManager();
+container.deleteGameMngr = new CronJobManager();
+container.predictorMngr = new CronJobManager();
+container.scrubmanager = new CronJobManager();
+container.crmngr = new CronJobManager();
+container.dailyStandings = new CronJobManager();
+container.dailyGameSS = new CronJobManager();
+/**
+ @GameScheduleTime Scrape ESPN for Game Schedule @ 5:00 AM
+ @StandingsSSTime Scrape ESPN for NBA Standings @ 4:58 AM
+ @SSTodaysGames Scrape ESPN for Game Schedule && Screenshot @ 4:56 AM
+ @ScheduleVerifyTime Verify if Hercules successfully scheduled the games for the day. Initially, Chromium would freeze-up. However,
+ Currently the Game Schedule operation has been optimized and the VPS running Hercules has received a CPU upgrade to support the increasing demand of the bot.
+ During the next regular season, Hercules will have to be monitored to see if it will need another CPU upgrade.
+ */
 export const GameScheduleTime = `00 05 * * *`;
 export const StandingsSSTime = `58 04 * * *`;
-export const SSTodaysGames = `56 04 * * *`;
+export const SSTodaysGames = `10 00 * * *`;
 export const ScheduleVerifyTime = `05 03 * * *`;
+
+
+//export const validateSchTime = '00 00 * * *';
 /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
-//? Creating a container for us to use with Usage Stats
+
+//* Validity of today's Game Schedule Image collection »»»»»»»»»»»» */
+container.scheduleValidated = 'false';
+
+//* ARRAY THAT WILL CONTAIN THE LIST OF GAME'S SCHEDULED TODAY »»»»»»»»»»»»»»»»»»»»»»»»»»»»»» */
+container.gameSchedList = [];
+
+//* ARRAY THAT WILL CONTAIN THE LIST OF GAME'S MANUALLY SCHEDULED TODAY »»»»»»»»»»»»»»»»»»»»»»»»»»»»»» */
+container.CrSchedList = [];
+
+//? Which Database Hercules will send Usage Stats to.
 container.SQLdb = 'n/a';
-//? Cron Job Managers
-//? Cron Manager to cancel scheduled games.
-//? First game manager. (Creates game channels)
-container.cronhandler = new CronJobManager();
-//? Second game manager (Deletes game channels)
-container.cronhandler2 = new CronJobManager();
-//? Third cron manager - prediction channel / lock prediction manager
-container.cronhandler3 = new CronJobManager();
-//? Gather Games Manager
-container.cronhandler4 = new CronJobManager();
-//? Fourth Cron Manager - Daily Game Scheduling Function
-container.dailyscheduler = new CronJobManager();
-//? Channel Scrubbing Manager
-container.scrubmanager = new CronJobManager();
-//? $cr cron manager.
-container.crmngr = new CronJobManager();
-//? Daily Standings Manager
-container.dailyStandings = new CronJobManager();
-//? Daily Game Schedule SS Manager
-container.dailyGameSS = new CronJobManager();
 
 // $creategame Object 
-container.GameSchedule2 = {};
+container.OBJCrgameSched = {};
 
-//? Main Game Array - populated from ScheduleTodaysNBAGames.js
-container.GameArray = [];
 
-//? $creategame game Schedule Array
-container.GameSchedule2Array = [];
 
 
 //? Container for the Game Count OBJ
-container.GameSchedule = {};
+container.OBJgameSched = {};
 //? Check for: Server Database
 //*---*/
 container.WhichServer = '';
@@ -109,15 +123,20 @@ export const serverlocalornot = container.WhichServer;
 export const noDbLoadedMsg = `The database is not loaded. **Please run $ld to load the database for this server.**`;
 container.crRan = 'false';
 //? Daily Mngr Var
-export const scheduleCrnMngr = container.dailyscheduler;
-/* ------------------------------------------------------------------------------------------------------------------------------------------------ */
-//? Images for Cmd List Embeds
+export const scheduleCrnMngr = container.hercGameSchedMngr;
+
+//* IMAGES FOR CMD LIST EMBEDS // RESPONSE EMBEDS »»»»»»»»»»»»»»»»»»» */
 export const scheduleImg = "https://i.imgur.com/kx0KxR2.jpg"
 export const DefaultEmbedImg = "https://media.discordapp.net/attachments/515598020818239491/975843360453578852/HerculesLogo.png"
-export const utilityEmbedImg = "https://i.pinimg.com/originals/d9/7c/86/d97c86b58f4f616c0627175d9bc44502.png"
-export const managementEmbedImg = "https://i.imgur.com/y3vNsmF.jpg"
+export const utilityEmbedImg = "https://i.imgur.com/nW0FeDG.jpg"
+export const managementEmbedImg = "https://i.imgur.com/zMAm8e2.jpg"
+export const WhatsNewImg = "https://i.imgur.com/y3vNsmF.jpg"
 export const HercScheduleEmbed = "https://cdn.nba.com/manage/2021/09/USATSI_16841994-784x523.jpg"
-/* ------------------------------------------------------------------------------------------------------------------------------------------------ */
+export const herculeslogo = "https://cdn.discordapp.com/attachments/515598020818239491/975854840217501737/HerculesLogo-PFP.png?size=4096"
+export const herculesfulllogo = 'https://cdn.discordapp.com/attachments/515598020818239491/975843360453578852/HerculesLogo.png?size=4096'
+export const nbaclogo =
+    "https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif";
+
 // cr values 2
 export const crRan = 'false'
 
@@ -158,4 +177,4 @@ export const minimal_args = [
     '--password-store=basic',
     '--use-gl=swiftshader',
     '--use-mock-keychain',
-  ];
+];
