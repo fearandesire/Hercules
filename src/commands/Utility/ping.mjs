@@ -3,7 +3,7 @@ import {
 } from '@sapphire/framework';
 import {
   AddToUsageStats
-} from '../utils/SQL/AddToUsageStats.js';
+} from '../../utils/SQL/AddToUsageStats.js';
 export class PingCommand extends Command {
   constructor(context, options) {
     super(context, {

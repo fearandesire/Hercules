@@ -8,7 +8,7 @@ import {
 //! REPLACE CONFIG VARIABLE
 import {
   SapDiscClient
-} from '../Hercules.js';
+} from '../../Hercules.js';
 
 /*
  ! We are using Cron Job Manager which is an effective

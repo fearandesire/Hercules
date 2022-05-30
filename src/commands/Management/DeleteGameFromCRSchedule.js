@@ -9,10 +9,10 @@ import {
   green,
   logthis,
   red
-} from "../lib/hercConfig.js";
+} from "../../lib/hercConfig.js";
 import {
   AddToUsageStats
-} from '../utils/SQL/AddToUsageStats.js'
+} from '../../utils/SQL/AddToUsageStats.js';
 const GameSchedule2 = container.GameSchedule2
 const GameScheduleManager = container.cronhandler;
 export class DeleteScheduledGame extends Command {

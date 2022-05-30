@@ -5,15 +5,11 @@ import {
   container
 } from '@sapphire/pieces';
 import { MessageEmbed } from 'discord.js';
-import { SapDiscClient } from '../Hercules.js';
+import { SapDiscClient } from '../../Hercules.js';
 import {
-  red,
-  bold,
-  logthis,
-  cborder,
-  magentaBright
-} from '../lib/hercConfig.js'
-import { SendEmbedResp } from '../utils/SQL/Embeds/SendEmbed.js';
+  bold, cborder, logthis, magentaBright, red
+} from '../../lib/hercConfig.js';
+import { SendEmbedResp } from '../../utils/SQL/Embeds/SendEmbed.js';
 const herculeslogo = "https://cdn.discordapp.com/attachments/515598020818239491/975854840217501737/HerculesLogo-PFP.png?size=4096";
 const nbaclogo =
   "https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif";

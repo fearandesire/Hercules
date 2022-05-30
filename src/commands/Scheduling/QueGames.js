@@ -2,12 +2,12 @@
 import {
   Command
 } from '@sapphire/framework';
-import { bold, green, logthis, noDbLoadedMsg, serverlocalornot } from '../lib/hercConfig.js';
+import { bold, green, logthis, noDbLoadedMsg, serverlocalornot } from '../../lib/hercConfig.js';
 import {
   LoadGames
-} from '../utils/LoadGames.js';
-import { SendEmbedErrorResp } from '../utils/SQL/Embeds/ErrorReplyEmbed.js';
-import { VerifyDatabase } from '../utils/VerifyDatabase.js';
+} from '../../utils/LoadGames.js';
+import { SendEmbedErrorResp } from '../../utils/SQL/Embeds/ErrorReplyEmbed.js';
+import { VerifyDatabase } from '../../utils/VerifyDatabase.js';
 
 export class QueGameScheduling extends Command {
   constructor(context, options) {

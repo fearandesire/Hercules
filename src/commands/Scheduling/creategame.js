@@ -4,14 +4,14 @@ import {
 import {
   container
 } from '@sapphire/pieces';
-import { CreateFromSavedTime } from '../utils/CmdCreateGames/CreateFromSavedTime.js';
+import { CreateFromSavedTime } from '../../utils/CmdCreateGames/CreateFromSavedTime.js';
+import { CreateFromScheduledTime } from '../../utils/CmdCreateGames/CreateFromScheduledTime.js';
 import {
   CreateNow
-} from '../utils/CmdCreateGames/CreateNow.js';
+} from '../../utils/CmdCreateGames/CreateNow.js';
 import {
   AddToUsageStats
-} from '../utils/SQL/AddToUsageStats.js';
-import {CreateFromScheduledTime} from '../utils/CmdCreateGames/CreateFromScheduledTime.js'
+} from '../../utils/SQL/AddToUsageStats.js';
 container.createGameTimes = [];
 const SavedGameTime = container.SavedGameTime
 let GameCount = parseInt(0);

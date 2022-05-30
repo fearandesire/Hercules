@@ -1,12 +1,12 @@
 import { Command } from '@sapphire/framework';
-import { ModScoreSQL } from '../utils/ModifyScoreSQL.js';
-export class scoreMsgtoggle extends Command {
+import { ModScoreSQL } from '../../utils/ModifyScoreSQL.js';
+export class scoretoggle extends Command {
 constructor(context, options) {
 super(context, {
 ...options,
-name: "scoremsgtoggle",
-aliases: ["smsgt", "smsgtg"],
-description: "score msg response toggle",
+name: "scoretoggle",
+aliases: ["st"],
+description: "score toggle",
 requiredUserPermissions: ["KICK_MEMBERS"]
 });
 }
@@ -15,15 +15,15 @@ requiredUserPermissions: ["KICK_MEMBERS"]
   const modInput = await args.pick("string").catch(() => null);
   if (modInput === "off") {
     var TrueOrFalse = 'false';
-    var dbID = parseInt(1);
+    var dbID = parseInt(2);
     ModScoreSQL(TrueOrFalse, dbID)
-    message.reply(`$Score command's response message is now **off!**`);
+    message.reply(`The score command has been turned **off!**`);
     return;
   } else if (modInput === "on") {
     var TrueOrFalse2 = 'true';
-    var dbID2 = parseInt(1);
+    var dbID2 = parseInt(2);
     ModScoreSQL(TrueOrFalse2, dbID2)
-    message.reply(`$Score command's response message is now  **on!**`);
+    message.reply(`The score command has been turned **on!**`);
     return;
   } else {
       console.log("Invalid inpuit given for scoretoggle command.")

@@ -6,11 +6,11 @@ import {
 } from '@sapphire/pieces';
 import {
   AddToUsageStats
-} from '../utils/SQL/AddToUsageStats.js'
+} from '../../utils/SQL/AddToUsageStats.js';
 
 import {
   MessageAttachment
-} from "discord.js"
+} from "discord.js";
 export class todaysgames extends Command {
   constructor(context, options) {
     super(context, {
