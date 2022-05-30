@@ -9,15 +9,11 @@
   - embed re-designed & its color will be of the current team that is winning.
   - halftime & game over responses
 - **$tg** - will correctly respond when there are no games for the day.
-- **$whatsnew** - command displays any new updates summarized within an embed.
-- Converted // Implemented ES6
-- Database Implementation - A majority of data Hercules will use for its main functions has been placed into an SQL Database. This was to create a way to customize Hercules on the fly without restarting the bot and affecting current Game Channels already open.
+- Database Implementation - A majority of data Hercules will use for its main functions has been placed into an SQL Database. Allows for on-the-fly customization.
 - Designed a logo for Hercules
 - Hercules presence/info/docs:
   - **$about** command
-  - added $help as another alias for $cmds
-  - Designed a logo for Hercules
-- Usage stats - Hercules will collect and store statistics for the most common operations. This is mostly for data and statistical purposes and will allow for tracking growth, usage & more.
-
+  - added **$help** as another alias for $cmds
+- Usage stats - Hercules will collect and store statistics for the most common operations.
 
 
