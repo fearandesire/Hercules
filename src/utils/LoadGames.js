@@ -1,26 +1,27 @@
 import {
-    container
+  container
 } from '@sapphire/pieces';
 import puppeteer from 'puppeteer';
 import {
-    SapDiscClient
+  SapDiscClient
 } from '../Hercules.js';
 import {
-    bold,
-    cborder,
-    cyanBright,
-    green,
-    logthis,
-    magentaBright,
-    NBATeams,
-    NBATeamsNickNames, yellowBright
+  bold,
+  cborder,
+  cyanBright,
+  green,
+  logthis,
+  magentaBright,
+  NBATeams,
+  NBATeamsNickNames, yellowBright
 } from '../lib/hercConfig.js';
 import {
-    CurrentFullDate, timesearch
+  CurrentFullDate, timesearch
 } from '../lib/Storage/Load-Games-Data.js';
 import {
-    ScheduleTodaysNBAGames
+  ScheduleTodaysNBAGames
 } from './ScheduleTodaysNBAGames.js';
+import { SendEmbedErrorResp } from './SQL/Embeds/ErrorReplyEmbed.js';
 
 
 
@@ -35,6 +36,8 @@ import {
   /* ------------------------- //! Passing in today's date and formatting it for ESPN Schedule URL to give us today's games. ------------------------- */
 
   export async function LoadGames(HomeAndAwayTeamsObject) {
+    var bChannel = container.dbVal[`botChannel`]
+    const chan = await SapDiscClient.channels.fetch(bChannel)
     logthis(green("Loading ESPN Game Page."))
     //? Using todays date formatted in a format ESPN will accept (Month, Day & Year all together)
     const ESPNURL = `https://www.espn.com/nba/schedule/_/date/` + CurrentFullDate
@@ -87,10 +90,14 @@ import {
           //? We verify if the Game Data Array < 10 because when 'GameDataArray' is empty, there are under 10 characters present - even though the array is blank (whitespaces, bracket etc)
           if (tabletoString.length < parseInt(1)) {
 
-            logthis(cyanBright(bold(`**No NBA Games were found for today.**`)))
-            SapDiscClient.channels.cache.get(botChannel).send("No NBA Games were found for today.")
+            logthis(cyanBright(bold(`No NBA Games were found for today.`)))
+            var embedText = `No NBA Games were found for today.`;
+            chan.send({
+              embeds: [SendEmbedErrorResp(embedText)]
+            })
             return;
           }
+          
           logthis(cyanBright(bold(`**  Logs for Game Scheduling/ESPN Scraping   **`)))
           logthis(magentaBright(cborder))
           logthis(cyanBright(bold(`[ESPN Scraping]\nArray of scraped ESPN Data:`)))

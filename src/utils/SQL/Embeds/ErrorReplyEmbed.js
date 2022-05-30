@@ -1,5 +1,7 @@
-import { MessageEmbed } from "discord.js"
-
+import { MessageEmbed } from "discord.js";
+/**
+ @embedText Text of Error Embed
+ */
 export function SendEmbedErrorResp(embedText){
 const HercEmbedResp = new MessageEmbed()
 //.setTitle("TITLE")
