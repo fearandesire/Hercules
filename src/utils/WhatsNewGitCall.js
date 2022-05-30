@@ -4,7 +4,7 @@ export async function WhatsNewGithubCall(message){
 const accessGithub = async () => {
     const GithubBrowser = await puppeteer.launch({
         headless: false,
-        userDataDir: '../lib/Puppeteer/'
+        userDataDir: '../../src/lib/Puppeteer'
     });
     const GitPage = await GithubBrowser.newPage();
     await GitPage.goto('https://raw.githubusercontent.com/fearandesire/Hercules/main/WhatsNew.md');

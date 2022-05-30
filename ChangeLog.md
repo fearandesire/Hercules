@@ -3,10 +3,10 @@
 v2.00
 
 - #general chat will be notified when a game channel opens
+- **$cg** or **$cleargames** command: this will remove all scheduled games
 - $mg command has another alias called $ms which is it's real name - Manual Screenshot
 - $postgames // $pg command has been renamed to **$qg** or **$quegames**
-- **$cg** or **$cleargames** command: this will remove all scheduled games
-
+- $tg has an additional response for when there are no games due for the day.
 - Added database verification for all commands that need server related data
 - Cleaned some code, but a long way to go
 - Designed Hercules Logo and solidifying Hercules presence

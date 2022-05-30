@@ -46,7 +46,7 @@ export async function ScrapeScore(ChanHomeTeam, ChanAwTeam, CurrentChanId, awayT
   const browser = await puppeteer.launch({
     headless: false,
     args: minimal_args,
-    userDataDir: '../lib/Puppeteer'
+    userDataDir: '../../src/lib/Puppeteer'
   });
   const page = await browser.newPage();
   await page.goto(

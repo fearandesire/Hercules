@@ -53,7 +53,7 @@ export async function screenshotTodaysNBAGames(SSTodaysGames, msg) {
     try {
       const browserSG = await puppeteer.launch({
         headless: false,
-        userDataDir: '../lib/Puppeteer'
+        userDataDir: '../../src/lib/Puppeteer'
       });
       const pageSG = await browserSG.newPage();
       await pageSG.goto(

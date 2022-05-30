@@ -40,11 +40,11 @@ export async function LoadNBACScoreCmdData() {
   logthis(yellow(bold(`[Database] Accessing 'NBAC Score' Database`)))
   //? Querying the database for the scoreconfig settings
   const QueryDB = {
-    name: 'fetch-scoremsg',
+    name: 'fetch-nbacscoreconfig',
     text: `SELECT * from nbacscoreconfig`,
   }
   //? A Promise is required to process these kinds of requests.
-  const nodepoolpromise = new Promise((err, res) => {
+  const nodepoolPromise = new Promise((err, res) => {
     //? @nodepool an instance of the postgreSQL connection
     nodepool.query(QueryDB, (err, res) => {
       if (err) {
@@ -63,7 +63,7 @@ export async function LoadNBACScoreCmdData() {
         logthis(green(`• Score Toggle:\n ${scoretoggleval}`))
         logthis(magentaBright(cborder))
         logthis(magentaBright(cborder))
-        //nodepool.end() //* Turns out we don't need to end the nodepool. Especially as we need it to stay open to query later on.
+        //nodepool.end()
       }
 
     })
