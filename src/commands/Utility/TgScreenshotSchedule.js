@@ -2,10 +2,11 @@
 import {
   Command, container
 } from '@sapphire/framework';
-import { bold, green, logthis, noDbLoadedMsg, SSTodaysGames } from '../lib/hercConfig.js';
-import { screenshotTodaysNBAGames } from '../utils/ScreenshotOperation.js';
-import { SendEmbedErrorResp } from '../utils/SQL/Embeds/ErrorReplyEmbed.js';
-import { VerifyDatabase } from '../utils/VerifyDatabase.js';
+import { bold, green, logthis, noDbLoadedMsg, SSTodaysGames } from '../../lib/hercConfig.js';
+import { screenshotTodaysNBAGames } from '../../utils/ScreenshotOperation.js';
+import { SendEmbedErrorResp } from '../../utils/SQL/Embeds/ErrorReplyEmbed.js';
+import { VerifyDatabase } from '../../utils/VerifyDatabase.js';
+
 export class QueGameScheduleScreenshot extends Command {
   constructor(context, options) {
     super(context, {

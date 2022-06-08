@@ -1,5 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { SapDiscClient } from '../../../Hercules.js';
+import { nbaclogo } from "../../../lib/hercConfig.js";
 /**
  * 
  * @SendEmbedResp function that will respond with an embed
@@ -10,7 +11,7 @@ import { SapDiscClient } from '../../../Hercules.js';
 export const SendEmbedResp = function(message, embedTitle, embedText){
 const HercEmbedResp = new MessageEmbed()
 //.setTitle("TITLE")
-  .setThumbnail('https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif')
+  .setThumbnail(nbaclogo)
   .setColor("#29d8ff")
   .addFields(
 
@@ -26,7 +27,7 @@ const HercEmbedResp = new MessageEmbed()
 export const SendEmbedRespToChannel = async function(embedTitle, embedText, targetChannel){
   const HercEmbedResp2 = new MessageEmbed()
   //.setTitle("TITLE")
-    .setThumbnail('https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif')
+    .setThumbnail(nbaclogo)
     .setColor("#29d8ff")
     .addFields(
   

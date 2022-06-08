@@ -13,7 +13,7 @@ import {
   logthis,
   magentaBright,
   NBATeams,
-  NBATeamsNickNames, yellowBright
+  NBATeamsNickNames, red, yellowBright
 } from '../lib/hercConfig.js';
 import {
   CurrentFullDate, timesearch
@@ -21,7 +21,7 @@ import {
 import {
   ScheduleTodaysNBAGames
 } from './ScheduleTodaysNBAGames.js';
-import { SendEmbedErrorResp } from './SQL/Embeds/ErrorReplyEmbed.js';
+import { ReturnScheduleEmbedErrorResp } from './SQL/Embeds/ErrorReplyEmbed.js';
 
 
 
@@ -43,7 +43,7 @@ import { SendEmbedErrorResp } from './SQL/Embeds/ErrorReplyEmbed.js';
     const ESPNURL = `https://www.espn.com/nba/schedule/_/date/` + CurrentFullDate
     logthis(cyanBright(bold(`[DEBUGGING]: ${ESPNURL}`)))
     const browser = await puppeteer.launch({
-      headless: false
+      headless: true
     });
     const page = await browser.newPage();
     await page.goto(
@@ -82,10 +82,10 @@ import { SendEmbedErrorResp } from './SQL/Embeds/ErrorReplyEmbed.js';
           const HomeAndAwayTeamsObject = container.HomeAndAwayTeams;
           const botChannel = container.dbVal[`botChannel`]
           const tabletoString = String(CompiledGameData)
-          //  logthis(red(bold(`[DEBUGGING LOADGAMES] tabletoString: ${tabletoString.length}`)))
+          logthis(red(bold(`[DEBUGGING LOADGAMES] tabletoString: ${tabletoString.length}`)))
           //? In this LoadGames function, all the data scraped returns on indiviudal lines. Turning the string into an array.
           const GameDataArray = tabletoString.split("\n")
-          // logthis(red(bold(`[DEBUGGING LOADGAMES] GameDataArray: ${GameDataArray}`)))
+           logthis(red(bold(`[DEBUGGING LOADGAMES] GameDataArray: ${GameDataArray}`)))
           logthis(magentaBright(cborder))
           //? We verify if the Game Data Array < 10 because when 'GameDataArray' is empty, there are under 10 characters present - even though the array is blank (whitespaces, bracket etc)
           if (tabletoString.length < parseInt(1)) {
@@ -93,7 +93,7 @@ import { SendEmbedErrorResp } from './SQL/Embeds/ErrorReplyEmbed.js';
             logthis(cyanBright(bold(`No NBA Games were found for today.`)))
             var embedText = `No NBA Games were found for today.`;
             chan.send({
-              embeds: [SendEmbedErrorResp(embedText)]
+              embeds: [ReturnScheduleEmbedErrorResp(embedText)]
             })
             return;
           }

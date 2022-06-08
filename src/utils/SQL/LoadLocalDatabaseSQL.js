@@ -23,7 +23,7 @@ import {
   const {
     Pool
   } = pg.default
-export const SecondPool = new Pool({
+export const nodepool = new Pool({
   
     user: dbUser,
     host: dbIP,
@@ -41,8 +41,8 @@ export async function LoadLocalServerSettingsData() {
 
     }
   //? A Promise is required to process these kinds of requests.
-    const poolpromise = new Promise((err, res) => {
-      SecondPool.query(QueryDB, (err, res) => {
+    const nodepoolPromise = new Promise((err, res) => {
+      nodepool.query(QueryDB, (err, res) => {
         if (err) {
           logthis(red(bold(`[DEBUGGING]: Database localserversettings ERROR:`)))
           console.log(err)

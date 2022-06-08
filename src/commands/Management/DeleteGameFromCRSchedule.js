@@ -1,27 +1,27 @@
 import {
-  Command
+    Command
 } from "@sapphire/framework";
 import {
-  container
+    container
 } from '@sapphire/pieces';
 import {
-  bold,
-  green,
-  logthis,
-  red
-} from "../lib/hercConfig.js";
+    bold,
+    green,
+    logthis,
+    red
+} from "../../lib/hercConfig.js";
 import {
-  AddToUsageStats
-} from '../utils/SQL/AddToUsageStats.js'
-const GameSchedule = container.GameSchedule
-const GameScheduleManager = container.cronhandler;
+    AddToUsageStats
+} from '../../utils/SQL/AddToUsageStats.js';
+const OBJCrgameSched = container.OBJCrgameSched
+const GameScheduleManager = container.hercGameSchedMngr;
 export class DeleteScheduledGame extends Command {
   constructor(context, options) {
     super(context, {
       ...options,
-      name: "deletescheduledgame",
-      aliases: ["deleteq", "deletescheduled", "delete", 'deletesch'],
-      description: "Delete a game from the schedule",
+      name: "deletecrscheduledgame",
+      aliases: ["deletecr", "deletecreatedgame"],
+      description: "Delete a game from the created games schedule",
       requiredUserPermissions: ['KICK_MEMBERS']
     });
   }
@@ -30,12 +30,12 @@ export class DeleteScheduledGame extends Command {
     //* -------------- */
     //* Adding to usage stats
     var userid = message.author.id
-    var SQLTargetTable = `deletegamefromschedulestats`
-    var commandname = `deleteq`
+    var SQLTargetTable = `deletegamefromcrschedulestats`
+    var commandname = `deletecr`
     AddToUsageStats(userid, SQLTargetTable, commandname)
     //* -------------- */
     const text = await args.rest('string').catch(() => null);
-    var selectedScheduledGame = GameSchedule[`${text}`]
+    var selectedScheduledGame = OBJCrgameSched[`${text}`]
     logthis(red(bold(`[Game Scheduling] Removing: ${selectedScheduledGame} from the Game Schedule`)))
     try {
       message.reply(`Deleted: '${selectedScheduledGame}' from today's channel scheduling.`)

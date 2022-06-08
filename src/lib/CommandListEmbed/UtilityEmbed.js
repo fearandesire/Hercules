@@ -1,12 +1,12 @@
 import {
     MessageEmbed
 } from 'discord.js';
-import { utilityEmbedImg } from '../hercConfig.js';
+import { nbaclogo, utilityEmbedImg } from '../hercConfig.js';
 export function usermodUtility(message){
     const usrmodUtilEmbed = new MessageEmbed()
         .setTitle("Utility Commands")
-        .setThumbnail('https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif')
-        .setColor("BLACK")
+        .setThumbnail(nbaclogo)
+        .setColor("#ff1100")
         .addFields(
 
             {   name: "$standings _[east, west, or none]*_",   value: `Returns the current NBA Standings. *User can request either East, West or if nothing is input - both will display.`, inline: false },

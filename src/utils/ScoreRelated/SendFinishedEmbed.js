@@ -1,21 +1,21 @@
 import {
-    green,
-    yellow
+  green,
+  yellow
 } from 'colorette';
 import {
-    MessageEmbed
+  MessageEmbed
 } from 'discord.js';
 import {
-    SapDiscClient
+  SapDiscClient
 } from '../../Hercules.js';
 import {
-    bold
+  bold, nbaclogo
 } from '../../lib/hercConfig.js';
 import {
-    SortScoreEmbedColor,
-    WhoWon
+  SortScoreEmbedColor,
+  WhoWon
 } from '../SortScoreEmbedColor.js';
-  
+
 
 /**
  @SendFinishedGameScore - If the scraped game data shows that it is finished, Hercules will respond with the winner & score from that finished game, while explicitly stating it is finished.
@@ -29,7 +29,7 @@ import {
    //var AdditionalLine = "Who did you have to win?"
    const ChanId = CurrentChanId;
    const sendPing = await SapDiscClient.channels.fetch(ChanId)
-   var finishedfooter = `Type $help to learn more commands. Hercules - Developed By Fenix#7559`
+   var finishedfooter = `Type $help to learn more commands. Developed By Fenix#7559`
    //? For some reason, 
    sendPing.send(`<@${UserRequestedID}>`)
    var EmbedTitle = `**${awayTeamEmoji} ${AwayTeam} ${AwScore} - ${HomeTeam} ${HScore} ${homeTeamEmoji}**`;
@@ -48,7 +48,7 @@ import {
      .setTimestamp()
      .setColor(SortScoreEmbedColor(AwScore, HScore, AwayTeam, HomeTeam))
      .setThumbnail(
-       "https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif"
+       nbaclogo
      )
      .setFooter(finishedfooter);
  

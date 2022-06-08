@@ -40,7 +40,7 @@ export async function LoadNBAChatDatabase() {
     text: `SELECT * from nbacserversettings`,
   }
   //? A Promise is required to process these kinds of requests.
-  const poolpromise = new Promise((err, res) => {
+  const nodepoolPromise = new Promise((err, res) => {
     SecondPool.query(QueryDB, (err, res) => {
       if (err) {
         logthis(red(bold(`[DEBUGGING] Database nbacserversettings ERROR:`)))

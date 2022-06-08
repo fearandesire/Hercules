@@ -7,15 +7,15 @@ import {
 } from '@sapphire/pieces';
 import {
     bold, green, logthis, noDbLoadedMsg, yellow
-} from '../lib/hercConfig.js';
+} from '../../lib/hercConfig.js';
 import {
     ScrapeScore
-} from '../utils/ScrapeGameScore.js';
+} from '../../utils/ScoreRelated/ScrapeGameScore.js';
 import {
     AddToUsageStats
-} from '../utils/SQL/AddToUsageStats.js';
-import { SendEmbedErrorResp } from '../utils/SQL/Embeds/ErrorReplyEmbed.js';
-import { VerifyDatabase } from '../utils/VerifyDatabase.js';
+} from '../../utils/SQL/AddToUsageStats.js';
+import { SendEmbedErrorResp } from '../../utils/SQL/Embeds/ErrorReplyEmbed.js';
+import { VerifyDatabase } from '../../utils/VerifyDatabase.js';
 // Define a bucket with 1 usage every 5 seconds
 // CHANGE GLOBAL TO MESSAGE AUTHOR ID
 

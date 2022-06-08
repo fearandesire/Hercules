@@ -5,141 +5,125 @@ import '@sapphire/plugin-hmr/register';
 import {
   SapDiscClient
 } from '../Hercules.js';
-
 import {
   bold,
   cborder,
   cyanBright,
   gameArrayDelete,
-  LineupResponse,
+  herculeslogo,
+  // LineupResponse,
   logthis,
   magentaBright,
-  nbagamehours,
-  predictorTeamIDs,
-  red
+  nbaclogo,
+  nbagamehours
+  // predictorTeamIDs
 } from '../lib/hercConfig.js';
-//? Preparing the NBA Game start time 
+import {
+  FormatGameTime
+} from "../utils/FormatGameTime.js";
 import {
   SendGameStartingSoon
 } from '../utils/GameStartingSoon.js';
 import {
-  GrabTimeNoPM
-} from "../utils/GrabTimeNoPM.js";
-//? Transforming the time to be used for the delete schedule
-import {
   SetDeleteTime
 } from "../utils/SetDeleteTime.js";
-//? Preparing start time to be used in finding the first NBA Game starting tonight
-import {
-  ClosePredictionChannels
-} from "../utils/ClosePredictorChannels.js";
-//? Function to prepare and send the schedule embeds
+
 import {
   ScheduleEmbed
 } from '../utils/ScheduleEmbed.js';
-//? Setup Predictor Lineup
-import {
-  SetupPredictorLineup
-} from '../utils/SetupPredictorLineup.js';
-
-const herculeslogo = "https://cdn.discordapp.com/attachments/515598020818239491/975854840217501737/HerculesLogo-PFP.png?size=4096";
-const nbaclogo =
-  "https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif";
-//let NBAGameCount = container.nbagamecount
-//* Array we will push the hour from the start time of the schedulenbagames function here.
-
-//* Object holding all of the game titles and start times to process into a single embed.
 let CountNBAGames = parseInt(0);
-const gameArray = container.GameArray
-//logthis(`Today is: ${TodayDayOfWeek}`)
-export function ScheduleTodaysNBAGames(HomeAndAwayTeamsObject) {
+const gameSchedList = container.gameSchedList
 
+/**
+- @ScheduleTodayNBAGames - function that will receive the scraped data and use said data to que the Game Channels & auto-delete times of the Game Channels
+- @DatabaseEntry The container that holds our Database settings. Named for readability
+- @GameParent - Game Category ID from DB
+- @GameChanTopic - Game Channel Topic from DB
+- @serverid - Server ID from DB
+- @ServerCache - Formatting the Server ID with discord guild cache for sending messages to specific channels.
+- @gameSchedList - array that will contain the Games automatically scheduled from Hercules
+- @OBJgameSched - object containing the Games scheduled - but more importantly: ordered numerically & increments per game.
+   An example return would look like: { "1", "celtics vs heat", "2", "warriors vs mavericks" }
+   This allows for simplistic deletion just by using the number associated with the game.
+- @CountNBAGames - incrementing value to count how many NBA Games scheduled
+- @TodaysGames - Variable holding the scraped Game data.
+- @gctitle - Game Channel Title in Discord Format
+- @CronGameChannelTitle - Lowercase Team Names for formatting uniform.
+- @CronGameTime - A link to @FormatGameTime - a function that will manipulate the time string of the NBA Game into an acceptable Cron format.
+- @teamArray Used to select a team at random to wish good luck to in the Game Channel
+* @Containers important containers defined below
+- @areGamesScheduled validity variable that will reflect if the games are scheduled are not. Hercules fails scrapes within LoadGames.js, not this file.
+- @FirstGameTime - the earliest / first game that starts for the day. Originally used for the Predictor Channel
+ * 
+ */
+
+
+export function ScheduleTodaysNBAGames(HomeAndAwayTeamsObject) {
   const DatabaseEntry = container.dbVal;
   const gameparent = DatabaseEntry[`GameParent`]
-  const lgct = DatabaseEntry[`GameChanTopic`]
+  const GameChanTopic = DatabaseEntry[`GameChanTopic`]
   const serverid = container.dbVal[`ServerId`]
-  const ServerCache = SapDiscClient.guilds.cache.get(serverid)
-
-  //? An Object that will store the channel name of each game we schedule. The key will be numerical and increase in +1 increments
-  //? This will allow for deletion of scheduled games by using the index of it on the schedule.
-  //? Example we can type $deleteq 1 to delete the first game schedule, so on
-  const GameSchedule = container.GameSchedule
-  logthis(red(bold(`[Debug DatabaseEntry]:\n ${DatabaseEntry}\n-- \n ${DatabaseEntry}\n-- \n ${DatabaseEntry[`botChannel`]}`)))
-
-
-  //? A True or False to see to double-check if the scheduling has completed (the virtual server it's on has some lag/sometimes puppeteer doesn't work)
+  const OBJgameSched = container.OBJgameSched
+  //logthis(red(bold(`[Debug DatabaseEntry]:\n ${DatabaseEntry}\n-- \n ${DatabaseEntry}\n-- \n ${DatabaseEntry[`botChannel`]}`)))
   container.areGamesScheduled = true;
-  //? Grabbing the earliest/first game of the night so we can close the predictor channel at that time.
   container.FirstGameTime = HomeAndAwayTeamsObject.teams[0].startTime;
+  const TodaysGames = HomeAndAwayTeamsObject.teams
   logthis(magentaBright(cborder))
   logthis(``)
-
   logthis(cyanBright(bold `[Game Scheduling] Scheduling NBA Games for today`))
-  logthis(container.FirstGameTime)
-  //const OBJofTodaysGames = Object.keys(HomeAndAwayTeamsObject[`teams`])
-  const TodaysGames = HomeAndAwayTeamsObject.teams
 
-  /* -------------------------------------------------------------------------- */
-  /*          //! Looping through the NBA Games today previously stored         */
-  /* -------------------------------------------------------------------------- */
+//* LOOPING THROUGH THE NBA GAMES DUE TODAY THAT WERE SCRAPED. »»»»»»»»»»»»»»»»»»»»»»»»»»»»»» */
   for (var game in TodaysGames) {
-    //? Keeping track of how many NBA Games we have scheduled to later display
-    //container.nbagamecount = parseInt(container.nbagamecount) + parseInt("1");
-    //NBAGameCount++;
     CountNBAGames++;
     const ServerCache = SapDiscClient.guilds.cache.get(serverid);
-    //* ------------------------------------------------------------------------------------------------------------------------------------------------ */
-    //! a minor mistake of the home team list actually being the away team. easiest solution, renaming it here where it is used for now.
-    const AwayTeam = TodaysGames[game].hTeam;
-    const HomeTeam = TodaysGames[game].AwTeam;
+    //!
+    //! There is a mistake in the prior code (LoadGames.js) where the Home Team and Away Team are swapped. For a temporary fix, I have swapped the assignment of the variables.
+    container.AwayTeam = TodaysGames[game].hTeam;
+    container.HomeTeam = TodaysGames[game].AwTeam;
+    const HomeTeam = container.HomeTeam;
+    const AwayTeam = container.AwayTeam;
     const startsAt = TodaysGames[game].startTime
-    // @gctitle  Game Channel Title Compiled with the relevant team names.
+    if (HomeTeam == 'Golden State'){
+      container.HomeTeam == 'GSW';
+    }
+    if (AwayTeam == 'Golden State'){
+      container.AwayTeam = 'GSW';
+    }
     const gctitle = AwayTeam + "-vs-" + HomeTeam;
-    //? For obj; making it lowercase to match how it will be written within the cron job manager, which is case sensitive.
+    //! «««««««««««««««««««««««««««««««««««««««««« */
     const CronGameChannelTitle = AwayTeam.toLowerCase() + "-vs-" + HomeTeam.toLowerCase();
-    GameSchedule[`${CountNBAGames}`] = CronGameChannelTitle
+    OBJgameSched[`${CountNBAGames}`] = CronGameChannelTitle
     const LowerCaseTitle = gctitle.toLowerCase();
-    //* ------------------------------------------------------------------------------------------------------------------------------------------------ */
-    logthis(cyanBright(bold(`[DEBUG] Starts At: ${startsAt}`)))
-
-    //const anydigits = /\d+/;
     if (startsAt == undefined) {
       logthis(cyanBright(bold(`A Live or Complete game was collected and dismissed.`)))
       continue;
     }
-    /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
-    //? Calling a function that will erase the "PM" portion of the times
-    //! This variable will also be apart of the string u͟s͟e͟d t͟o s͟t͟a͟r͟t g͟a͟m͟e͟s a͟t t͟h͟e͟i͟r s͟c͟h͟e͟d͟u͟l͟e t͟i͟m͟e.
-    const CronGameTime = GrabTimeNoPM(startsAt)
-    /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
+    const CronGameTime = FormatGameTime(startsAt)
     const Stored24HRFormatTime = container.storedtime;
     const gcArrayTitle = `${AwayTeam} vs. ${HomeTeam}`
     nbagamehours.push(startsAt)
-    //? Setting up the Lineup for the Predictor Challenge
-    var predictorIdHomeTeam = predictorTeamIDs[HomeTeam] || "(not found)";
-    var predictorIdHAwayTeam = predictorTeamIDs[AwayTeam] || "(not found)";
-    LineupResponse.push(`<@582334440588443816> ac 1 ${predictorIdHomeTeam} ${predictorIdHAwayTeam}`)
 
+    //? Hashed out: Predictor channel is currently unused.
+    /////? Setting up the Lineup for the Predictor Challenge
+    // var predictorIdHomeTeam = predictorTeamIDs[HomeTeam] || "(not found)";
+    // var predictorIdHAwayTeam = predictorTeamIDs[AwayTeam] || "(not found)";
+    // LineupResponse.push(`<@582334440588443816> ac 1 ${predictorIdHomeTeam} ${predictorIdHAwayTeam}`)
 
-    //? Cron Job Manager for game delete times.
-    const gamedeletemngr = container.cronhandler2;
-    //? Daily Mngr
-    const scheduleCrnMngr = container.dailyscheduler;
-    //? Game Mngr
-    const gamemngr = container.cronhandler;
-    //? Used to select a team at random to wish good luck to.
+    const gamedeletemngr = container.deleteGameMngr;
+    const gamemngr = container.hercGameSchedMngr;
     const teamArray = [
       `${HomeTeam}`,
       `${AwayTeam}`
     ];
     const DeleteTime = SetDeleteTime(Stored24HRFormatTime, CountNBAGames);
+    
     /* -------------------------------------------------------------------------- */
     /*                          //! Scheduling NBA Games                          */
     /* -------------------------------------------------------------------------- */
     gamemngr.add(`${LowerCaseTitle}`, `${CronGameTime} * * *`, () => {
       ServerCache.channels.create(`${gctitle}`, {
         parent: `${gameparent}`,
-        topic: `${lgct}`,
+        topic: `${GameChanTopic}`,
       }).then((channel) => {
         logthis(`Creating Game Channel: ${gctitle}`)
         const id = channel.id
@@ -167,7 +151,7 @@ export function ScheduleTodaysNBAGames(HomeAndAwayTeamsObject) {
 
     })
     //? Adding the game to an array which will display all the games scheduled today in an embed.
-    gameArray.push(`${gcArrayTitle} opening at: ${startsAt}`)
+    gameSchedList.push(`${gcArrayTitle} opening at: ${startsAt}`)
     //? Adding to the count of NBA Games scheduled so far.
     //? A variable used to get the earliest NBA Game for the night.
     gamemngr.start(`${LowerCaseTitle}`);
@@ -200,47 +184,38 @@ export function ScheduleTodaysNBAGames(HomeAndAwayTeamsObject) {
     gamedeletemngr.start(`Delete-${LowerCaseTitle}`);
     logthis(cyanBright(bold(`Delete Time is: ${DeleteTime}`)))
 
-    //? A function to get the hours and minutes substringed, which we will use to get the earliest NBA Game starting today.
     //? End of For In Loop
   }
 
-  /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
-  /*                             //!   Grabbing the time of the first Game Tonight - using to close the Predictor Channel                                */
-  /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
-  const EarliestNBAGameTonight = setTimeout(() => {
+  //? Hashed out: Predictor channels are currently not being used
+  // /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
+  // /*                             //!   Grabbing the time of the first Game Tonight - using to close the Predictor Channel                             */
+  // /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
+  // const EarliestNBAGameTonight = setTimeout(() => {
 
-    logthis(magentaBright(cborder))
-    logthis(cyanBright(bold `Scheduling Predictor Channels permission changes.`))
-    logthis(magentaBright(cborder))
-    ClosePredictionChannels();
+  //   logthis(magentaBright(cborder))
+  //   logthis(cyanBright(bold `Scheduling Predictor Channels permission changes.`))
+  //   logthis(magentaBright(cborder))
+  //   ClosePredictionChannels();
 
-  }, 1100)
+  // }, 1100)
 
 
 
   /* -------------------------------------------------------------------------- */
-  /*                             //!  Schedule & Delete Embed                               */
+  /*                             //!  Schedule & Delete Embed                   */
   /* -------------------------------------------------------------------------- */
   const scheduleEmbed = setTimeout(() => {
-    ScheduleEmbed(nbaclogo, herculeslogo, gameArray, gameArrayDelete, CountNBAGames);
+    ScheduleEmbed(nbaclogo, herculeslogo, gameSchedList, gameArrayDelete, CountNBAGames);
   }, 1100)
 
-  /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
-  /*                                                           //! Schedule Predictor Lineup                                                          */
-  /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
-  const SetupLineup = setTimeout(() => {
-    SetupPredictorLineup(LineupResponse)
 
-  }, 1100)
-  // async function SendGamesScheduled() {
-  //   var bChannel = container.dbVal[`botChannel`]
-  //   const chan = await SapDiscClient.channels.fetch(bChannel)
-  //   chan.send(`**Games Scheduled.**`)
-  //   return;
-  // } //! Returns: Promise {object}
-  // logthis(cborder)
-  // logthis(cyanBright(bold `[Game Scheduling]\nGame Scheduling complete.`))
-  // logthis(cborder)
-  // // }
-  // SendGamesScheduled()
+  //? Hashed out: Predictor channels are currently not being used.
+  // /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
+  // /*                                                           //! Schedule Predictor Lineup                                                          */
+  // /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
+  // const SetupLineup = setTimeout(() => {
+  //   SetupPredictorLineup(LineupResponse)
+
+  // }, 1100)
 }

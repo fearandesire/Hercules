@@ -5,22 +5,24 @@ import {
   container
 } from '@sapphire/pieces';
 import { MessageEmbed } from 'discord.js';
-import { SapDiscClient } from '../Hercules.js';
+import { SapDiscClient } from '../../Hercules.js';
 import {
-  red,
-  bold,
-  logthis,
-  cborder,
-  magentaBright
-} from '../lib/hercConfig.js'
-import { SendEmbedResp } from '../utils/SQL/Embeds/SendEmbed.js';
-const herculeslogo = "https://cdn.discordapp.com/attachments/515598020818239491/975854840217501737/HerculesLogo-PFP.png?size=4096";
-const nbaclogo =
-  "https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif";
-  const GameSchedule = container.GameSchedule
-  const GameSchedule2 = container.GameSchedule2
-  const GameSchedule2Array = container.GameSchedule2Array;
-  const GameArray = container.GameArray;
+  bold, cborder, herculeslogo, logthis, magentaBright, nbaclogo, red
+} from '../../lib/hercConfig.js';
+import { SendEmbedResp } from '../../utils/SQL/Embeds/SendEmbed.js';
+
+  /**
+   - @gameSchedList array containing the Games automatically scheduled from Hercules
+   - @CrSchedList array containing Games/Channels scheduled manually with $cr
+   - @OBJgameSched object containing the Games scheduled - but more importantly: ordered numerically & increments per game.
+   An example return would look like: { "1", "celtics vs heat", "2", "warriors vs mavericks" }
+   This allows for simplistic deletion just by using the number associated with the game.
+   - @OBJCrgameSched object containing the Games manually scheduled with $cr -- same as @OBJgameSched
+   */
+  const OBJgameSched = container.OBJgameSched
+  const OBJCrgameSched = container.OBJCrgameSched
+  const CrSchedList = container.CrSchedList;
+  const gameSchedList = container.gameSchedList;
 export class ListSchedule extends Command {
   constructor(context, options) {
     super(context, {
@@ -33,24 +35,31 @@ export class ListSchedule extends Command {
   }
 
   async messageRun(message) {
-    if (GameArray && GameSchedule2Array.length < parseInt(1)){
+    if (gameSchedList && CrSchedList.length < parseInt(1)){
       var embedTitleNoGames = 'Schedule Information';
       var embedTextNoGames = `No games are currently scheduled. Verify with $tg to ensure this is correct.`;
       SendEmbedResp(message, embedTitleNoGames, embedTextNoGames)
       return;
     }
-    if (GameArray.length < parseInt(1)){
-      var embedTitle = 'Schedule Information';
-      var embedText = `Currently, no games have been scheduled by Hercules.`;
-      SendEmbedResp(message, embedTitle, embedText)
+    //? Response if there are no games that have been scheduled with $cr or by Hercules
+    if (CrSchedList.length < parseInt(1) && gameSchedList.length < parseInt(1)){
+      var CRembedTitle = 'Schedule Information';
+      var CRembedText = `Currently, there are no games scheduled by Hercules or manually.`;
+      SendEmbedResp(message, CRembedTitle, CRembedText)
       return;
+    }
+    if (gameSchedList.length < parseInt(1)){
+      var embedTitle = 'Automatic Schedule Information';
+      var embedText = `There are no games automatically scheduled by **Hercules** for today.`;
+      SendEmbedResp(message, embedTitle, embedText)
+      //return;
     }
     logthis(magentaBright(cborder))
     logthis(red(bold(`Logging Games Scheduled Obj/List:`)))
 
-    console.log(GameSchedule)
+    console.log(OBJgameSched)
     console.log(`----`)
-    console.log(GameSchedule2)
+    console.log(OBJCrgameSched)
     console.log(`----`)
     
     /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
@@ -64,12 +73,12 @@ export class ListSchedule extends Command {
         iconURL: herculeslogo
       })
       //? Using .join to format the game schedule array
-      .setDescription(`**NBA Games:** \n \n **${GameArray.join('\n \n')}**`)
+      .setDescription(`**NBA Games:** \n \n **${gameSchedList.join('\n \n')}**`)
       .setColor("BLUE")
       .setFooter({
         text: "Take note of the order of the games. To delete a game, type: $deleteq [index]. For example, to delete the second game on this list, you would type: **$deletq 2.** Alternatively, if unsure, please review $vg ids"
       })
-    //? Sending Embed
+    //? Sending Games Scheduled from Hercules Embed
     async function sendAutoSchEmbed(AutoScheduleEmbed) {
       var bChannel = container.dbVal[`botChannel`]
       const chan = await SapDiscClient.channels.fetch(bChannel)
@@ -77,12 +86,6 @@ export class ListSchedule extends Command {
       return;
     }
     sendAutoSchEmbed(AutoScheduleEmbed);
-    if (GameSchedule2Array.length < parseInt(1)){
-      var CRembedTitle = '$CR Schedule Information';
-      var CRembedText = `No games have been manually scheduled with $cr // $createagame command, games scheduled automatically are in the above embed.`;
-      SendEmbedResp(message, CRembedTitle, CRembedText)
-      return;
-    }
     const CreateGameScheduleEmbed = new MessageEmbed()
       /* ---------------------------------------------------- //* Embed containing the $creategame game schedule ---------------------------------------------------- */
       .setTitle("Scheduled Games (from $cr)")
@@ -92,7 +95,7 @@ export class ListSchedule extends Command {
         iconURL: herculeslogo
       })
       //? Using .join to format the game schedule array
-      .setDescription(`**NBA Games:** \n \n **${GameSchedule2Array.join('\n \n')}**`)
+      .setDescription(`**NBA Games:** \n \n **${CrSchedList.join('\n \n')}**`)
       .setColor("BLUE")
       .setFooter({
         text: "Take note of the order of the games. To delete a game, type: **$deletecr [index]**. For example, to delete the second game on this list, you would type: **$deletq 2.** Alternatively, if unsure, please review $vg ids. Note: Deleted Games will not disappear from the list."

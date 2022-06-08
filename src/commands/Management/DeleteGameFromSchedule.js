@@ -9,19 +9,19 @@ import {
   green,
   logthis,
   red
-} from "../lib/hercConfig.js";
+} from "../../lib/hercConfig.js";
 import {
   AddToUsageStats
-} from '../utils/SQL/AddToUsageStats.js'
-const GameSchedule2 = container.GameSchedule2
-const GameScheduleManager = container.cronhandler;
+} from '../../utils/SQL/AddToUsageStats.js';
+const OBJgameSched = container.OBJgameSched
+const GameScheduleManager = container.hercGameSchedMngr;
 export class DeleteScheduledGame extends Command {
   constructor(context, options) {
     super(context, {
       ...options,
-      name: "deletecrscheduledgame",
-      aliases: ["deletecr", "deletecreatedgame"],
-      description: "Delete a game from the created games schedule",
+      name: "deletescheduledgame",
+      aliases: ["deleteq", "deletescheduled", "delete", 'deletesch'],
+      description: "Delete a game from the schedule",
       requiredUserPermissions: ['KICK_MEMBERS']
     });
   }
@@ -30,12 +30,12 @@ export class DeleteScheduledGame extends Command {
     //* -------------- */
     //* Adding to usage stats
     var userid = message.author.id
-    var SQLTargetTable = `deletegamefromcrschedulestats`
-    var commandname = `deletecr`
+    var SQLTargetTable = `deletegamefromschedulestats`
+    var commandname = `deleteq`
     AddToUsageStats(userid, SQLTargetTable, commandname)
     //* -------------- */
     const text = await args.rest('string').catch(() => null);
-    var selectedScheduledGame = GameSchedule2[`${text}`]
+    var selectedScheduledGame = OBJgameSched[`${text}`]
     logthis(red(bold(`[Game Scheduling] Removing: ${selectedScheduledGame} from the Game Schedule`)))
     try {
       message.reply(`Deleted: '${selectedScheduledGame}' from today's channel scheduling.`)

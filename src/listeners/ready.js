@@ -20,21 +20,25 @@ export class ReadyListener extends Listener {
   }
 }
 
-/* ------------------------------------------------------------------------------------------------------------------------------------------------ */
-/*                                                //! NBA Games, Standings & Schedule data daily gathering.                                               */
-/* ------------------------------------------------------------------------------------------------------------------------------------------------ */
 
-// //* Gathering NBA ⁡⁢⁣⁣S͟T͟A͟N͟D͟I͟N͟G͟S⁡ Image
+//* NBA GAMES, STANDINGS & SCHEDULE DATA DAILY GATHERING. »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» */
+
+//* Collecting NBA ⁡⁢⁣⁣S͟T͟A͟N͟D͟I͟N͟G͟S⁡ Image
 dailystandings(StandingsSSTime)
-// //* Gathering NBA ⁡⁣⁢⁢⁡⁣⁢⁣S͟C͟H͟E͟D͟U͟L͟E⁡ Image
+
+//* Collecting NBA ⁡⁣⁢⁢⁡⁣⁢⁣S͟C͟H͟E͟D͟U͟L͟E⁡ Image
 const gatherGamesManager =  container.dailyGameSS;
 gatherGamesManager.add(`gathergames1`, SSTodaysGames, () => {
   screenshotTodaysNBAGames(SSTodaysGames)
 })
 gatherGamesManager.start(`gathergames1`)
-// //* Gathering, and then scheduling NBA Games
+
+//* Collecting, and then scheduling NBA Games
  scheduleCrnMngr.add('dailyscheduling', GameScheduleTime, () => {
   LoadGames();
  })
  scheduleCrnMngr.start('dailyscheduling')
-logthis(`readyjs loaded`)
+//* ««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««« */
+
+
+logthis(`readyjs loaded`);

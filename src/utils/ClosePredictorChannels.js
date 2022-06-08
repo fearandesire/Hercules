@@ -15,7 +15,7 @@ export function ClosePredictionChannels() {
     logthis(magentaBright(cborder))
     const EarliestGameTime = container.FirstGameTime;
     const botChan = SapDiscClient.channels.cache.get(botchannel);
-    const lockPredictorMngr = container.cronhandler3;
+    const lockPredictorMngr = container.predictorMngr;
     const PDTitle = `PredictorPermissionTask`
     const timestamp = new Date();
     let currentminutes = timestamp.getMinutes();
@@ -53,9 +53,9 @@ export function ClosePredictionChannels() {
         /*                                                            //! Predictor 1 -> to #2⁡                                                         */
         /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
         
-        //! It's important to note: Currently, the Predictor Channel Bot isn't taking commands from my bot as of yet.
+        //! It's important to note: Currently, the Predictor Channel Bot (real name Accuracy Challenge Bot) isn't taking commands from my bot as of yet.
         //! Cause of this especially, we are leaving the channel that becomes predictor-channel (when we re-name predictor #2 -> to 1) permissions alone;
-        //! This is because likely, #2 has the next-day's game's scheduled, but we don't know at what time, since Cy is doing them manually right now, it is random
+        //! This is because likely, #2 has the next-day's game's scheduled, but we don't know at what time as it is done manually.
         //! With bot integration, we can have a set schedule of when to change the permissions for both channels. But for now, only todays games (predictor 1) will close.
         var predictorChannel1 = SapDiscClient.channels.cache.get(`${predictorChan}`);
         const P1Name = predictorChannel1.name;

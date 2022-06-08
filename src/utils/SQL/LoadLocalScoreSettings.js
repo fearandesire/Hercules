@@ -24,7 +24,7 @@ import * as pg from 'pg';
 const {
   Pool
 } = pg.default
-export const pool = new Pool({
+export const nodepool = new Pool({
   user: dbUser,
   host: dbIP,
   database: 'settings',
@@ -47,9 +47,9 @@ export async function LoadLocalScoreCmdData() {
     text: `SELECT * from localscoreconfig`,
   }
   //? A Promise is required to process these kinds of requests.
-  const poolpromise = new Promise((err, res) => {
+  const nodepoolPromise = new Promise((err, res) => {
 
-    pool.query(QueryDB, (err, res) => {
+    nodepool.query(QueryDB, (err, res) => {
       if (err) {
         logthis(red(bold(`[DEBUGGING]: localscoreconfig Database ERROR:`)))
         console.log(err)
@@ -66,7 +66,7 @@ export async function LoadLocalScoreCmdData() {
         logthis(green(`• Score Toggle:\n ${scoretoggleval}`))
         logthis(magentaBright(cborder))
         logthis(magentaBright(cborder))
-        //pool.end() // (pool should stay open) 
+        //nodepool.end() // (nodepool should stay open) 
       }
 
     })

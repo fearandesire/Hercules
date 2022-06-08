@@ -1,13 +1,13 @@
 import _12FromTo24Hours from '12fromto24hours';
-const lockPredictorMngr = container.cronhandler3;
 import {
     container
 } from '@sapphire/pieces';
 import { yellow } from 'colorette';
-import { logthis } from '../../lib/hercConfig';
 import {
     SapDiscClient
 } from '../../Hercules.js';
+import { logthis } from '../../lib/hercConfig';
+const lockPredictorMngr = container.predictorMngr;
 export function QuePredictorClosing(time){
     const newTime = "0" + time + " PM";
     const convertedTo24Hr = _12FromTo24Hours(newTime);
@@ -18,7 +18,7 @@ export function QuePredictorClosing(time){
     const DatabaseEntry = container.dbVal;
     const predictorChan = DatabaseEntry[`PredictorChan`]
     const predictorChan2 = DatabaseEntry[`PredictorChan2`]
-    const lockPredictorMngr = container.cronhandler3;
+    const lockPredictorMngr = container.predictorMngr;
     const predictorRole = DatabaseEntry[`PredictorRole`]
     const botchannel = DatabaseEntry[`botChannel`]
     const client = SapDiscClient;

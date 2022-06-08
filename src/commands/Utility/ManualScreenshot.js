@@ -1,11 +1,11 @@
 import {
     Command
 } from '@sapphire/framework';
+import fs from "fs";
+import fetch from "node-fetch";
 import {
     AddToUsageStats
-  } from '../utils/SQL/AddToUsageStats.js'
-import fs from "fs"
-import fetch from "node-fetch";
+} from '../../utils/SQL/AddToUsageStats.js';
 export class ManualScreenshot extends Command {
     constructor(context, options) {
         super(context, {

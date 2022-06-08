@@ -5,15 +5,16 @@ import {
   MessageEmbed
 } from 'discord.js';
 import {
+  SapDiscClient
+} from '../Hercules.js';
+import {
   bold, cborder, cyanBright,
   logthis, magentaBright, red
 } from '../lib/hercConfig.js';
-import {
-  SapDiscClient
-} from '../Hercules.js';
-export function ScheduleEmbed(nbaclogo, herculeslogo, gameArray, gameArrayDelete, CountNBAGames) {
+export function ScheduleEmbed(nbaclogo, herculeslogo, gameSchedList, gameArrayDelete, CountNBAGames) {
   const botchannel = container.dbVal[`botChannel`]
   logthis(red(bold(`[DEBUGGING] BOTCHANNEL: ${container.dbVal[`botChannel`]}`)))
+  //? The time predictor channel will be closed.
   const ETConv = container.ETConvert
   const scheduleEmbed = new MessageEmbed()
     /* ---------------------------------------------------- //! Embed containing the game schedule ---------------------------------------------------- */
@@ -24,10 +25,10 @@ export function ScheduleEmbed(nbaclogo, herculeslogo, gameArray, gameArrayDelete
       iconURL: herculeslogo
     })
     //? Using .join to format the game schedule array
-    .setDescription(`**NBA Games:** \n \n **${gameArray.join('\n \n')}**`)
+    .setDescription(`**NBA Games:** \n \n **${gameSchedList.join('\n \n')}**`)
     .setColor("BLUE")
     .setFooter({
-      text: "If you need to delete a game the bot made, or a game manually made - read $help or $cmds."
+      text: "If you need to delete a game Hercules scheduled, or a game manually made: Type $help manage."
     })
   /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
   //? Sending Embed
@@ -45,7 +46,7 @@ export function ScheduleEmbed(nbaclogo, herculeslogo, gameArray, gameArrayDelete
 
   logthis(magentaBright(cborder))
   logthis(cyanBright(bold(`[Game Scheduling]\nSchedule Embed:`)))
-  logthis((gameArray))
+  logthis((gameSchedList))
   logthis(magentaBright(cborder))
   /* -------------------------------------- //! Embed containing the times we will delete created game channels: HASHED OUT for now. -------------------------------------- */
   // const deleteEmbed = new MessageEmbed()
@@ -83,10 +84,9 @@ export function ScheduleEmbed(nbaclogo, herculeslogo, gameArray, gameArrayDelete
       iconURL: herculeslogo
     })
     .setDescription(`
-    Prediction channels have been scheduled to close at **${ETConv}** \n 
     ${container.TodayDayOfWeek}'s Games (**${CountNBAGames} total**) are successfully scheduled! \n 
-    **$help or $cmds** will display all commands. Please read the commands first and if you can't find what you need, ping FENIX. \n
-    **View current scheduled games via $vg.** __View every **ID** for the scheduled games with:__ \`\`\`$vg ids\`\`\`
+    **$help or $cmds** will display all commands. \n
+    **View current scheduled games via $ls.** *__View every scheduled daily operation with: $viewall or $va__*
     `)
     .setColor("BLUE");
     /* ------------------------------------------------------------------------------------------------------------------------------------------------ */

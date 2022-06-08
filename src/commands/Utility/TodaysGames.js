@@ -5,12 +5,13 @@ import {
   container
 } from '@sapphire/pieces';
 import {
-  AddToUsageStats
-} from '../utils/SQL/AddToUsageStats.js'
-
-import {
   MessageAttachment
-} from "discord.js"
+} from "discord.js";
+import { nbaclogo } from '../../lib/hercConfig.js';
+import {
+  AddToUsageStats
+} from '../../utils/SQL/AddToUsageStats.js';
+import { SendEmbedResp } from '../../utils/SQL/Embeds/SendEmbed.js';
 export class todaysgames extends Command {
   constructor(context, options) {
     super(context, {
@@ -28,6 +29,12 @@ export class todaysgames extends Command {
       message.reply("There is a 5 second cooldown for this command.");
       return;
     }
+    if (container.scheduleValidated === 'false'){
+    var embedTitle = 'Schedule Info'
+    var embedText = 'There are no games on the schedule today.'
+    SendEmbedResp(message, embedTitle, embedText)
+    return;
+    }
     //* -------------- */
     //* Adding to usage stats
     var userid = message.author.id
@@ -40,7 +47,7 @@ export class todaysgames extends Command {
       title: 'NBA Games Today',
       color: "#29d8ff",
       author: 'Hercules',
-      thumbnail: 'https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif',
+      thumbnail: nbaclogo,
       image: {
         url: 'attachment://tgnba.jpg',
       },
@@ -49,7 +56,6 @@ export class todaysgames extends Command {
       embeds: [TodayGamesEmbed],
       files: [file]
     });
-    //? Might put this into an Embed to make it look better.
     ratelimit.consume();
   }
 }

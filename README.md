@@ -10,7 +10,7 @@
 <p align="center">
   <img alt="Github top language" src="https://img.shields.io/github/languages/top/fearandesire/Hercules?color=green">
 
-  <img alt="NBAC Discord Online Users" src="https://img.shields.io/discord/555171631539028000?color=blue&label=NBAC%20Online%20Users">
+  <img alt="NBAC Discord Users" src="https://img.shields.io/badge/NBAC%20Users-149%2C588-blue">
 
   <img alt="License" src="https://img.shields.io/github/license/fearandesire/Hercules">
 
@@ -23,8 +23,8 @@
 
 
 
-<h4 align="center"> 
-	<!-- 🚧  Hercules  🚀 Under construction...  🚧 -->
+<h4 align="center">
+	<!-- 🚧  Hercules  🚀 Under construction.  🚧 -->
 </h4> 
 
 <hr> 
@@ -51,13 +51,13 @@ For details on each file and their purpose - please review the full [About Page]
 
 Progress will be reflected in the Change Log. Finished milestones will be removed from this list.
 
-- Retrieve Player & League Stats on-demand
+- Retrieve Player & Team Record Stats on-demand
 - External Score Command (for channels outside of the game channel)
 - Website that displays the usage stats // Hercules website
 
 ## Statistics: ##
 
-Hercules will capture usage stats for the common commands/functions such as:
+Hercules will capture usage stats for the common commands/functions such as but not limited to:
 
 - Score
 - Today's Games (Viewing schedule with ($tg, $todaysgames)
@@ -68,7 +68,7 @@ Hercules will capture usage stats for the common commands/functions such as:
 
 ## :rocket: Technologies ##
 
-Packages & Tools that were key in achieving what I needed in this project. Don't invent the wheel twice.
+Packages & Tools that were key in achieving what I needed in this project.
 
 - [Sapphire Framework](https://github.com/sapphiredev/framework)
 - [Node.js](https://nodejs.org/en/)
@@ -83,22 +83,21 @@ You can view the [Change Log here](ChangeLog.md)
 
 These notes are mainly intended for fellow staff at NBAC for the future & beyond.
 
-After downloading the latest [Release](https://github.com/fearandesire/Hercules/releases), please do the following:
-<br/>
-<br/>
-Run: ```npm install``` in terminal/directory of Hercules.js
+1. After downloading the latest [Release](https://github.com/fearandesire/Hercules/releases), please do the following:
+
+2. **Run:** ```npm install``` in terminal/directory of Hercules.js
 
 
-Add: an .env file that has the following variables:
+3. **Add:** an .env file that has the following variables:
   - TOKEN (for the NBAC Bot and NOT the local version of the bot)
   - SQLusername
   - SQLiPAddress
   - SQLPass
   - SQLPort
 
-Run: Hercules.js
+4. Run: Hercules.js
 
-After turning Hercules on, please use the ```$ld``` command (load database) to properly acquire the settings needed to use the bot.
+5. After turning Hercules on, please use the ```$ld``` command (load database) to properly acquire the settings needed to use the bot.
 
 ## :memo: License ##
 

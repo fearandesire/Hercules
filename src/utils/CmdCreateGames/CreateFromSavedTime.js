@@ -1,16 +1,15 @@
 import {
-    container
-  } from '@sapphire/pieces';
-  import {
-    SapDiscClient
-  } from '../../Hercules.js';
+  container
+} from '@sapphire/pieces';
+import {
+  SapDiscClient
+} from '../../Hercules.js';
+import { SendEmbedResp } from '../SQL/Embeds/SendEmbed.js';
 
 /**
- *
- *
  * @CreateFromSavedTime function: If $creategame has already been used, this provides a QoL feature to type 'last' as the time input to match the previous.
- * @param {*} GameParent - Gathering from Database
- * @param {*} GameChatTopic - Gathering from Database
+ * @GameParent - Game Category ID collected from Database
+ * @GameChatTopic - Channel Topic to be assigned to the channel - collected from the database
  */
 export function CreateFromSavedTime(message, GameParent, GameChatTopic, teamArray, team1, team2){
 const SavedGameTime = container.SavedGameTime;
@@ -22,19 +21,12 @@ const predictorChan = DatabaseEntry[`PredictorChan`]
  const LGTHours = SeparatingTime[0];
  const LGTMins = SeparatingTime[1];
  const crmanager = container.crmngr;
- //const ConvertedLGTHours = 12 + parseInt(LGTHours, 10);
- //const vs = await args.pick("string");
- //let TwelveHourTime = ConvertedLGTHours + LGTMins;
  const title = `${team1}-vs-${team2}`;
  const chanName = `${team1} vs ${team2}`
  const requestedTimeCronFormat = `${LGTMins} ${LGTHours} * * *`
- //const preConverted = `${LGTHours}${LGTMins}`
- message.channel.send(
-   `Creating channel: ` +
-   title.toLowerCase() +
-   " at " +
-   LGTHours + ":" + LGTMins
- );
+ var embedTitle = 'Schedule Management';
+ var embedText = `Creating channel: ${title.toLowerCase()}  at + ${LGTHours}:${LGTMins}`;
+ SendEmbedResp(message, embedTitle, embedText)
  crmanager.add(`${title}`, requestedTimeCronFormat, () => {
    const createdChannelv3 = message.guild.channels
      .create(chanName, {

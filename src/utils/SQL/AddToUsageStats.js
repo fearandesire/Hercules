@@ -55,7 +55,7 @@ export async function AddToUsageStats(InputUserID, SQLTargetTable, commandsource
     text: `INSERT INTO ${SQLTargetTable} (userid, commandname) VALUES (${InputUserID}, '${commandsource}');`,
   }
   //? A Promise is required to process these kinds of requests.
-  const poolpromise = new Promise((err, res) => {
+  const UsagePoolPromise = new Promise((err, res) => {
     UsagePool.query(QueryDB, (err, res) => {
       if (err) {
         logthis(redBright(bold(cborder)))

@@ -3,16 +3,16 @@ node_modules
 .env
 scoretodo.md
 todo.md
+lib/Puppeteer
 .vscode/
 public/
 prisma/
 .eslintrc.cjs
 .code-workspace
+/gameimages
 botavatar.png
 v2.00 release notes.md
-# Logs
-logs
-*.log
+
 npm-debug.log*  
 yarn-debug.log*
 yarn-error.log*
