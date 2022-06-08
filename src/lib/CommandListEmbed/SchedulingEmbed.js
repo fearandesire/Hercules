@@ -1,11 +1,11 @@
 import {
     MessageEmbed
 } from 'discord.js';
-import { scheduleImg } from '../hercConfig.js';
+import { nbaclogo, scheduleImg } from '../hercConfig.js';
 export function usermodScheduling(message){
     const usrmodSchEmbed = new MessageEmbed()
         .setTitle("Scheduling Commands")
-        .setThumbnail('https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif')
+        .setThumbnail(nbaclogo)
         .setColor("#ff1100")
         .addFields(
             

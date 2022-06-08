@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 import { bold, green, logthis, yellowBright } from '../lib/hercConfig.js';
 import { NBATeamHexColors } from '../lib/Storage/NBATeamHexColors.js';
 const NBAHexColors = NBATeamHexColors

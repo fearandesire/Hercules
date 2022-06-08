@@ -1,11 +1,11 @@
 import {
     MessageEmbed
 } from 'discord.js';
-import { utilityEmbedImg } from '../hercConfig.js';
+import { nbaclogo, utilityEmbedImg } from '../hercConfig.js';
 export function usermodUtility(message){
     const usrmodUtilEmbed = new MessageEmbed()
         .setTitle("Utility Commands")
-        .setThumbnail('https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif')
+        .setThumbnail(nbaclogo)
         .setColor("#ff1100")
         .addFields(
 

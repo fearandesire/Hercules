@@ -9,13 +9,13 @@ import {
   SapDiscClient
 } from '../../Hercules.js';
 import {
-  bold
+  bold, nbaclogo
 } from '../../lib/hercConfig.js';
 import {
   SortScoreEmbedColor,
   WhoWon
 } from '../SortScoreEmbedColor.js';
-  
+
 
 /**
  @SendFinishedGameScore - If the scraped game data shows that it is finished, Hercules will respond with the winner & score from that finished game, while explicitly stating it is finished.
@@ -48,7 +48,7 @@ import {
      .setTimestamp()
      .setColor(SortScoreEmbedColor(AwScore, HScore, AwayTeam, HomeTeam))
      .setThumbnail(
-       "https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif"
+       nbaclogo
      )
      .setFooter(finishedfooter);
  

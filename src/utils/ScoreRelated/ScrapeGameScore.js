@@ -14,13 +14,13 @@ import {
   magentaBright,
   minimal_args,
   red
-} from '../lib/hercConfig.js';
+} from '../../lib/hercConfig.js';
 import {
   SendFinishedGameScore
-} from './ScoreRelated/SendFinishedEmbed.js';
+} from './SendFinishedEmbed.js';
 import {
   SendGameScore
-} from './ScoreRelated/SendLiveEmbed.js';
+} from './SendLiveEmbed.js';
 
 //* Using Puppeteer: I scrape Google's Score API to get an accurate read on live game scores.
 //* Working on increasing the response time. As it currently stands at around ~3 seconds. We are spoiled as a society.

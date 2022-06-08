@@ -13,7 +13,7 @@ import {
   magentaBright
 } from '../lib/hercConfig.js';
 import {
-  SendEmbedErrorResp
+  ReturnScheduleEmbedErrorResp
 } from './SQL/Embeds/ErrorReplyEmbed.js';
 import {
   SendEmbedRespToChannel
@@ -73,10 +73,10 @@ export async function screenshotTodaysNBAGames(SSTodaysGames, msg) {
       container.scheduleValidated = 'false';
       console.log('[DEBUGGING] ERROR when screenshoting game schedule - - Likely there are no Games scheduled today.')
       var bChannel = container.dbVal[`botChannel`]
-      var embedText = 'There are no NBA Games on the schedule today.'
+      var embedText = 'There are no NBA Games on the schedule today. Schedule Image will be unavailable.'
       const chan = await SapDiscClient.channels.fetch(bChannel)
       chan.send({
-        embeds: [SendEmbedErrorResp(embedText)]
+        embeds: [ReturnScheduleEmbedErrorResp(embedText)]
       })
       return;
     }

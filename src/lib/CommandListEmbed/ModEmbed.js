@@ -1,11 +1,11 @@
 import {
     MessageEmbed
 } from 'discord.js';
-import { DefaultEmbedImg } from '../hercConfig.js';
+import { DefaultEmbedImg, nbaclogo } from '../hercConfig.js';
 export function usermodDefault(message){ 
     const usrmodDefaultEmbed = new MessageEmbed()
         .setTitle("Command List Menu")
-        .setThumbnail('https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif')
+        .setThumbnail(nbaclogo)
         .setColor("#00FFFF")
         .addFields(
             

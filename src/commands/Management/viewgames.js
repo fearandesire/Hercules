@@ -11,8 +11,6 @@ const deleteGameMngr = container.deleteGameMngr;
 const dailyStandingsMngr = container.dailyStandings
 const dailyGameSSMngr = container.dailyGameSS
 const CrgameSchedMngr = container.crmngr;
-//const ScrubScheduler = container.scrubmanager
-//const lockPredictorMngr = container.predictorMngr;
 
 export class viewall extends Command {
   constructor(context, options) {

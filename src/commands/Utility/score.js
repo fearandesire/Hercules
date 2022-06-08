@@ -10,7 +10,7 @@ import {
 } from '../../lib/hercConfig.js';
 import {
     ScrapeScore
-} from '../../utils/ScrapeGameScore.js';
+} from '../../utils/ScoreRelated/ScrapeGameScore.js';
 import {
     AddToUsageStats
 } from '../../utils/SQL/AddToUsageStats.js';

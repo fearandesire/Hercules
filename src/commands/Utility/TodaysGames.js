@@ -5,12 +5,12 @@ import {
   container
 } from '@sapphire/pieces';
 import {
-  AddToUsageStats
-} from '../../utils/SQL/AddToUsageStats.js';
-
-import {
   MessageAttachment
 } from "discord.js";
+import { nbaclogo } from '../../lib/hercConfig.js';
+import {
+  AddToUsageStats
+} from '../../utils/SQL/AddToUsageStats.js';
 import { SendEmbedResp } from '../../utils/SQL/Embeds/SendEmbed.js';
 export class todaysgames extends Command {
   constructor(context, options) {
@@ -47,7 +47,7 @@ export class todaysgames extends Command {
       title: 'NBA Games Today',
       color: "#29d8ff",
       author: 'Hercules',
-      thumbnail: 'https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif',
+      thumbnail: nbaclogo,
       image: {
         url: 'attachment://tgnba.jpg',
       },
@@ -56,7 +56,6 @@ export class todaysgames extends Command {
       embeds: [TodayGamesEmbed],
       files: [file]
     });
-    //? Might put this into an Embed to make it look better.
     ratelimit.consume();
   }
 }

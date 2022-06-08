@@ -9,17 +9,17 @@ public/
 prisma/
 .eslintrc.cjs
 .code-workspace
+/gameimages
 botavatar.png
 v2.00 release notes.md
-# Logs
-logs
-*.log
 npm-debug.log*  
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
-
+gameimages/weststandings.jpg
+gameimages/eaststandings.jpg
+gameimages/tgnba.jpg
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 

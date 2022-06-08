@@ -85,9 +85,9 @@ container.dailyGameSS = new CronJobManager();
  Currently the Game Schedule operation has been optimized and the VPS running Hercules has received a CPU upgrade to support the increasing demand of the bot.
  During the next regular season, Hercules will have to be monitored to see if it will need another CPU upgrade.
  */
-export const GameScheduleTime = `00 05 * * *`;
-export const StandingsSSTime = `58 04 * * *`;
-export const SSTodaysGames = `10 00 * * *`;
+export const GameScheduleTime = `0 6 * * *`;
+export const StandingsSSTime = `35 5 * * *`;
+export const SSTodaysGames = `30 5 * * *`;
 export const ScheduleVerifyTime = `05 03 * * *`;
 
 
@@ -135,7 +135,7 @@ export const HercScheduleEmbed = "https://cdn.nba.com/manage/2021/09/USATSI_1684
 export const herculeslogo = "https://cdn.discordapp.com/attachments/515598020818239491/975854840217501737/HerculesLogo-PFP.png?size=4096"
 export const herculesfulllogo = 'https://cdn.discordapp.com/attachments/515598020818239491/975843360453578852/HerculesLogo.png?size=4096'
 export const nbaclogo =
-    "https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif";
+    "https://cdn.discordapp.com/attachments/515598020818239491/981652760325922836/NBACPrideLogo.gif?size=4096";
 
 // cr values 2
 export const crRan = 'false'

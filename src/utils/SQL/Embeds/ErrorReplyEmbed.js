@@ -1,11 +1,12 @@
 import { MessageEmbed } from "discord.js";
+import { nbaclogo } from "../../../lib/hercConfig.js";
 /**
  @embedText Text of Error Embed
  */
 export function SendEmbedErrorResp(embedText){
 const HercEmbedResp = new MessageEmbed()
 //.setTitle("TITLE")
-  .setThumbnail('https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif')
+  .setThumbnail(nbaclogo)
   .setColor("RED")
   .addFields(
 
@@ -21,7 +22,7 @@ const HercEmbedResp = new MessageEmbed()
 export function ReturnEmbedErrorResp(errorMsg){
   const HercEmbedResp = new MessageEmbed()
   //.setTitle("TITLE")
-    .setThumbnail('https://cdn.discordapp.com/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif')
+    .setThumbnail(nbaclogo)
     .setColor("RED")
     .addFields(
   
@@ -33,3 +34,19 @@ export function ReturnEmbedErrorResp(errorMsg){
     )
     return HercEmbedResp;
   }
+
+  export function ReturnScheduleEmbedErrorResp(errorMsg){
+    const HercEmbedResp = new MessageEmbed()
+    //.setTitle("TITLE")
+      .setThumbnail(nbaclogo)
+      .setColor("#f5ef42")
+      .addFields(
+    
+        {
+          name: "No Schedule Found Today",
+          value: `${errorMsg}`,
+          inline: false
+        },
+      )
+      return HercEmbedResp;
+    }

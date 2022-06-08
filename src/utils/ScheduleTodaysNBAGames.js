@@ -78,9 +78,17 @@ export function ScheduleTodaysNBAGames(HomeAndAwayTeamsObject) {
     const ServerCache = SapDiscClient.guilds.cache.get(serverid);
     //!
     //! There is a mistake in the prior code (LoadGames.js) where the Home Team and Away Team are swapped. For a temporary fix, I have swapped the assignment of the variables.
-    const AwayTeam = TodaysGames[game].hTeam;
-    const HomeTeam = TodaysGames[game].AwTeam;
+    container.AwayTeam = TodaysGames[game].hTeam;
+    container.HomeTeam = TodaysGames[game].AwTeam;
+    const HomeTeam = container.HomeTeam;
+    const AwayTeam = container.AwayTeam;
     const startsAt = TodaysGames[game].startTime
+    if (HomeTeam == 'Golden State'){
+      container.HomeTeam == 'GSW';
+    }
+    if (AwayTeam == 'Golden State'){
+      container.AwayTeam = 'GSW';
+    }
     const gctitle = AwayTeam + "-vs-" + HomeTeam;
     //! «««««««««««««««««««««««««««««««««««««««««« */
     const CronGameChannelTitle = AwayTeam.toLowerCase() + "-vs-" + HomeTeam.toLowerCase();

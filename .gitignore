@@ -15,3 +15,6 @@ todo.md
 *.vsix
 
 .code-workspace
+.src/gameimages/weststandings.jpg
+src/gameimages/eaststandings.jpg
+src/gameimages/tgnba.jpg
