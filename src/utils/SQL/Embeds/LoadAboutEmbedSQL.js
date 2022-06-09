@@ -47,7 +47,7 @@ export async function LoadAboutEmbedDatabase() {
                 logthis(red(bold(`[DEBUGGING node-postgres QUERY]:`)))
                 console.log(err)
             } else {
-                logthis(green(bold(`[Database] Successfully accessed 'aboutembed`)))
+                logthis(green(bold(`[Database] Successfully accessed 'aboutembed'`)))
 
                 logthis(green(bold(`About Embed Configuration:`)))
                 //? This outputs similar to an API call, with a JSON Object that contains an array, with an object inside of it. I only have one row of entries, which are identified with the [1] serial number in SQL

@@ -1,6 +1,4 @@
-import {
-  Command
-} from '@sapphire/framework';
+import { Command, container } from '@sapphire/framework';
 import {
   bold,
   green,
@@ -14,6 +12,7 @@ import {
 import {
   SendEmbedErrorResp
 } from '../../utils/SQL/Embeds/ErrorReplyEmbed.js';
+import { SendEmbedResp } from '../../utils/SQL/Embeds/SendEmbed.js';
 import {
   VerifyDatabase
 } from '../../utils/VerifyDatabase.js';
@@ -37,6 +36,12 @@ export class QueGameScheduling extends Command {
       })
       return;
     }
+    if (container.scheduleCompleted === 'true'){
+      var embedTitle = 'Schedule Info'
+      var embedText = 'Games have already been scheduled for today.'
+      SendEmbedResp(message, embedTitle, embedText)
+      return;
+      }
     message.reply("Scheduling Games, please wait.")
     LoadGames();
     console.log(
