@@ -19,7 +19,6 @@ export class todaysgames extends Command {
       name: 'todaysgames',
       aliases: ['tg'],
       description: 'todays games',
-      requiredUserPermissions: ['KICK_MEMBERS']
     });
   }
 
