@@ -4,15 +4,14 @@ import {
 import {
   container
 } from '@sapphire/pieces';
+import { statcord } from "../../Hercules.js";
 import {
   bold,
   green,
   logthis,
   red
 } from "../../lib/hercConfig.js";
-import {
-  AddToUsageStats
-} from '../../utils/SQL/AddToUsageStats.js';
+import { SendErrorEmbed } from "../../utils/Send Embeds/ErrorReplyEmbed.js";
 const OBJgameSched = container.OBJgameSched
 const GameScheduleManager = container.hercGameSchedMngr;
 export class DeleteScheduledGame extends Command {
@@ -27,14 +26,19 @@ export class DeleteScheduledGame extends Command {
   }
 
   async messageRun(message, args) {
+    const text = await args.rest('string').catch(() => null);
+    if (text === undefined){
+      SendErrorEmbed(message, 'You must specify a game via index to delete. For help, type $help manage')
+      return;
+    }
     //* -------------- */
     //* Adding to usage stats
     var userid = message.author.id
-    var SQLTargetTable = `deletegamefromschedulestats`
-    var commandname = `deleteq`
-    AddToUsageStats(userid, SQLTargetTable, commandname)
+    var commandname = `deletescheduledgame`
+    statcord.postCommand(commandname, userid)
     //* -------------- */
-    const text = await args.rest('string').catch(() => null);
+
+
     var selectedScheduledGame = OBJgameSched[`${text}`]
     logthis(red(bold(`[Game Scheduling] Removing: ${selectedScheduledGame} from the Game Schedule`)))
     try {

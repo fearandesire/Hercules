@@ -1,10 +1,8 @@
 import {
   Command
 } from '@sapphire/framework';
-import {
-  AddToUsageStats
-} from '../../utils/SQL/AddToUsageStats.js';
-export class PingCommand extends Command {
+import { statcord } from '../../Hercules.js';
+export class Ping extends Command {
   constructor(context, options) {
     super(context, {
       ...options,
@@ -16,13 +14,13 @@ export class PingCommand extends Command {
   }
 
   async messageRun(message) {
-    //* -------------- */
+    
     //* Adding to usage stats
     var userid = message.author.id
-    var SQLTargetTable = `pingstats`
     var commandname = `ping`
-    AddToUsageStats(userid, SQLTargetTable, commandname)
+    statcord.postCommand(commandname, userid)
     //* -------------- */
+
     const msg = await message.channel.send('Pinging...');
     const content = `Pong from JavaScript! Bot Latency ${Math.round(this.container.client.ws.ping)}ms. API Latency ${
       msg.createdTimestamp - message.createdTimestamp

@@ -1,20 +1,16 @@
 
 import {
-    Command
+  Command
 } from '@sapphire/framework';
 import {
-    container
+  container
 } from '@sapphire/pieces';
+import { statcord } from '../../Hercules.js';
 import {
-    bold, green, logthis, noDbLoadedMsg, yellow
+  bold, green, logthis, noDbLoadedMsg, yellow
 } from '../../lib/hercConfig.js';
-import {
-    ScrapeScore
-} from '../../utils/ScoreRelated/ScrapeGameScore.js';
-import {
-    AddToUsageStats
-} from '../../utils/SQL/AddToUsageStats.js';
-import { SendEmbedErrorResp } from '../../utils/SQL/Embeds/ErrorReplyEmbed.js';
+import { ScrapeScore } from '../../utils/NBA Game Related/ScoreRelated/ScrapeGameScore.js';
+import { SendEmbedErrorResp } from '../../utils/Send Embeds/ErrorReplyEmbed.js';
 import { VerifyDatabase } from '../../utils/VerifyDatabase.js';
 // Define a bucket with 1 usage every 5 seconds
 // CHANGE GLOBAL TO MESSAGE AUTHOR ID
@@ -42,27 +38,29 @@ export class score extends Command {
 
 
     async messageRun(message) {
-        var serverlocalornot = container.WhichServer;
-        //* ADDING TO USAGE STATS »»» */
-        var userid = message.author.id
-        var SQLTargetTable = `scorestats`
-        var commandname = `score`
-        AddToUsageStats(userid, SQLTargetTable, commandname)
-        //* ««««««««««««««««««««««««« */
         const chan = message.channel;
         const configDB = container.dbVal
-       //? DB Verification Failsafe
-       if (VerifyDatabase() == 'No Database is loaded') {
-         logthis(green(bold(serverlocalornot)))
-           message.reply({embeds: [SendEmbedErrorResp(noDbLoadedMsg)]})
-         return;
-       }
-        //? command cooldown check
         const ratelimit = container.rateinfo.acquire(message.author.id);
+
         if (ratelimit.limited) {
             message.reply("There is a 5 second cooldown for this command.");
             return;
         }
+ 
+        var serverlocalornot = container.WhichServer;
+        if (VerifyDatabase() == 'No Database is loaded') {
+            logthis(green(bold(serverlocalornot)))
+              message.reply({embeds: [SendEmbedErrorResp(noDbLoadedMsg)]})
+            return;
+          }
+
+        //* ADDING TO USAGE STATS »»» */
+        var userid = message.author.id
+        var commandname = `score`
+        statcord.postCommand(commandname, userid)
+        //* ««««««««««««««««««««««««« */
+
+
         //? Verify $score status - as it is toggable to prevent spam
         var isScoreOnOrOff = container.dbVal[`scoretoggleval`]
         //? If score is off, Hercules will reply with that information. I call it scoremsg.

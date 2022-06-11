@@ -5,7 +5,7 @@ import {
   container
 } from '@sapphire/pieces';
 import { bold, green, logthis, noDbLoadedMsg, yellow } from '../lib/hercConfig.js';
-import { SendEmbedErrorResp } from '../utils/SQL/Embeds/ErrorReplyEmbed.js';
+import { SendEmbedErrorResp } from '../utils/Send Embeds/ErrorReplyEmbed.js';
 import { VerifyDatabase } from '../utils/VerifyDatabase.js';
 export class verifyserver extends Command {
   constructor(context, options) {  

@@ -4,14 +4,16 @@ import {
 import {
   container
 } from '@sapphire/pieces';
+import { statcord } from '../../Hercules.js';
+import { noDbLoadedMsg, serverlocalornot } from '../../lib/hercConfig.js';
 import { CreateFromSavedTime } from '../../utils/CmdCreateGames/CreateFromSavedTime.js';
 import { CreateFromScheduledTime } from '../../utils/CmdCreateGames/CreateFromScheduledTime.js';
 import {
   CreateNow
 } from '../../utils/CmdCreateGames/CreateNow.js';
-import {
-  AddToUsageStats
-} from '../../utils/SQL/AddToUsageStats.js';
+import { LogGreen } from '../../utils/ConsoleLogging.js';
+import { SendEmbedErrorResp } from '../../utils/Send Embeds/ErrorReplyEmbed.js';
+import { VerifyDatabase } from '../../utils/VerifyDatabase.js';
 container.createGameTimes = [];
 const SavedGameTime = container.SavedGameTime
 let GameCount = parseInt(0);
@@ -26,14 +28,20 @@ export class CreateGames extends Command {
   }
 
   async messageRun(message, args) {
+    if (VerifyDatabase() == 'No Database is loaded') {
+      LogGreen(serverlocalornot)
+      message.reply({
+        embeds: [SendEmbedErrorResp(noDbLoadedMsg)]
+      })
+      return;
+    }
     const DatabaseEntry = container.dbVal;
     const GameParent = DatabaseEntry[`GameParent`]
     const GameChatTopic = DatabaseEntry[`GameChanTopic`]
     //* Adding to usage stats
     var userid = message.author.id
-    var SQLTargetTable = `creategamestats`
     var commandname = `creategame`
-    AddToUsageStats(userid, SQLTargetTable, commandname)
+    statcord.postCommand(commandname, userid)
     //* -------------- */
     const GameChanMsg = container.dbVal[`GameChanMsg`];
     const team1 = await args.pick("string");

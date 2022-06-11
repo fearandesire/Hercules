@@ -7,11 +7,9 @@ import {
 import {
   MessageAttachment
 } from "discord.js";
+import { statcord } from '../../Hercules.js';
 import { nbaclogo } from '../../lib/hercConfig.js';
-import {
-  AddToUsageStats
-} from '../../utils/SQL/AddToUsageStats.js';
-import { SendEmbedResp } from '../../utils/SQL/Embeds/SendEmbed.js';
+import { SendEmbedResp } from '../../utils/Send Embeds/SendEmbed.js';
 export class todaysgames extends Command {
   constructor(context, options) {
     super(context, {
@@ -19,7 +17,6 @@ export class todaysgames extends Command {
       name: 'todaysgames',
       aliases: ['tg'],
       description: 'todays games',
-      requiredUserPermissions: ['KICK_MEMBERS']
     });
   }
 
@@ -38,9 +35,8 @@ export class todaysgames extends Command {
     //* -------------- */
     //* Adding to usage stats
     var userid = message.author.id
-    var SQLTargetTable = `todaysgamesstats`
     var commandname = `todaysgames`
-    AddToUsageStats(userid, SQLTargetTable, commandname)
+    statcord.postCommand(commandname, userid)
     //* -------------- */
     const file = new MessageAttachment('./gameimages/tgnba.jpg');
     const TodayGamesEmbed = {

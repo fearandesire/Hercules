@@ -1,6 +1,5 @@
-import {
-  Command
-} from '@sapphire/framework';
+import { Command, container } from '@sapphire/framework';
+import { statcord } from '../../Hercules.js';
 import {
   bold,
   green,
@@ -10,10 +9,11 @@ import {
 } from '../../lib/hercConfig.js';
 import {
   LoadGames
-} from '../../utils/LoadGames.js';
+} from '../../utils/NBA Game Related/LoadGames.js';
 import {
   SendEmbedErrorResp
-} from '../../utils/SQL/Embeds/ErrorReplyEmbed.js';
+} from '../../utils/Send Embeds/ErrorReplyEmbed.js';
+import { SendEmbedResp } from '../../utils/Send Embeds/SendEmbed.js';
 import {
   VerifyDatabase
 } from '../../utils/VerifyDatabase.js';
@@ -30,6 +30,13 @@ export class QueGameScheduling extends Command {
   }
 
   async messageRun(message) {
+
+    //* ADDING TO USAGE STATS »»» */
+    var userid = message.author.id
+    var commandname = `quegames`
+    statcord.postCommand(commandname, userid)
+    //* -------------- */
+
     if (VerifyDatabase() == 'No Database is loaded') {
       logthis(green(bold(serverlocalornot)))
       message.reply({
@@ -37,6 +44,14 @@ export class QueGameScheduling extends Command {
       })
       return;
     }
+
+    if (container.scheduleCompleted === 'true'){
+      var embedTitle = 'Schedule Info'
+      var embedText = 'Games have already been scheduled for today.'
+      SendEmbedResp(message, embedTitle, embedText)
+      return;
+      }
+      
     message.reply("Scheduling Games, please wait.")
     LoadGames();
     console.log(

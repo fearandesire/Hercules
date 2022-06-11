@@ -1,18 +1,16 @@
 import {
-    Command
+  Command
 } from "@sapphire/framework";
 import {
-    container
+  container
 } from '@sapphire/pieces';
+import { statcord } from "../../Hercules.js";
 import {
-    bold,
-    green,
-    logthis,
-    red
+  bold,
+  green,
+  logthis,
+  red
 } from "../../lib/hercConfig.js";
-import {
-    AddToUsageStats
-} from '../../utils/SQL/AddToUsageStats.js';
 const OBJCrgameSched = container.OBJCrgameSched
 const GameScheduleManager = container.hercGameSchedMngr;
 export class DeleteScheduledGame extends Command {
@@ -27,13 +25,13 @@ export class DeleteScheduledGame extends Command {
   }
 
   async messageRun(message, args) {
-    //* -------------- */
+
     //* Adding to usage stats
     var userid = message.author.id
-    var SQLTargetTable = `deletegamefromcrschedulestats`
-    var commandname = `deletecr`
-    AddToUsageStats(userid, SQLTargetTable, commandname)
+    var commandname = `deletecreatedgame`
+    statcord.postCommand(commandname, userid)
     //* -------------- */
+
     const text = await args.rest('string').catch(() => null);
     var selectedScheduledGame = OBJCrgameSched[`${text}`]
     logthis(red(bold(`[Game Scheduling] Removing: ${selectedScheduledGame} from the Game Schedule`)))

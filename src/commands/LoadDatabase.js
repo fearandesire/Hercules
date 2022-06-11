@@ -1,34 +1,37 @@
 //? Load local database settings (score has a separate file)
 import {
-  LoadNBAChatDatabase
-} from '../utils/SQL/LoadNBACDatabaseSQL.js'
-import {
-  ReturnEmbedErrorResp
-} from '../utils/SQL/Embeds/ErrorReplyEmbed.js'
-import {
   Command
 } from '@sapphire/framework';
 import {
   container
 } from '@sapphire/pieces';
 import {
-  LoadLocalServerSettingsData
-} from '../utils/SQL/LoadLocalDatabaseSQL.js';
-import {
-  LoadAboutEmbedDatabase
-} from '../utils/SQL/Embeds/LoadAboutEmbedSQL.js';
-import {
-  LoadLocalScoreCmdData
-} from '../utils/SQL/LoadLocalScoreSettings.js';
-import {
-  SendEmbedResp
-} from '../utils/SQL/Embeds/SendEmbed.js'
-import {
   bold,
   green,
   logthis
 } from '../lib/hercConfig.js';
-import { LoadNBACScoreCmdData } from '../utils/SQL/LoadNBACScoreSettings.js';
+
+import {
+  ReturnEmbedErrorResp
+} from '../utils/Send Embeds/ErrorReplyEmbed.js';
+import {
+  SendEmbedResp
+} from '../utils/Send Embeds/SendEmbed.js';
+import {
+  LoadAboutEmbedDatabase
+} from '../utils/SQL/Embeds/LoadAboutEmbedSQL.js';
+import { LoadDailySchedule } from '../utils/SQL/LoadDatabase/LocalDailySchedule.js';
+import {
+  LoadLocalServerSettingsData
+} from '../utils/SQL/LoadDatabase/LocalDatabaseSQL.js';
+import {
+  LoadLocalScoreCmdData
+} from '../utils/SQL/LoadDatabase/LocalScoreSettings.js';
+import {
+  LoadNBAChatDatabase
+} from '../utils/SQL/LoadDatabase/NBACDatabaseSQL.js';
+import { LoadNBACScoreCmdData } from '../utils/SQL/LoadDatabase/NBACScoreSettings.js';
+
 export class LoadDatabase extends Command {
   constructor(context, options) {
     super(context, {
@@ -42,36 +45,46 @@ export class LoadDatabase extends Command {
 
   async messageRun(message) {
 
-    // message.reply("Loading database for the server.")
     var serverID = message.guild.id
     container.loadedServerID = serverID
-    //? My local database
+    if (container.WhichServer == 'Local' || container.WhichServer == 'NBAC') {
+      SendEmbedResp(message, 'Database Information', `The ${container.WhichServer} database is already loaded.`)
+      return;
+    }
     if (serverID == `777353407383339038`) {
       // LoadLocalScoreCmdData()
       // LoadAboutEmbedDatabase()
       LoadLocalServerSettingsData().then(() => {
+
+        LoadDailySchedule().then(() => {
+      
         LoadAboutEmbedDatabase();
+
         LoadLocalScoreCmdData();
-        //if (container.WhichServer == 'LOCAL') {
+        //if (container.WhichServer == 'Local') {
           var embedTitle = `Database Interaction`;
           var embedText = `The Local Database has been loaded for this server.`
           SendEmbedResp(message, embedTitle, embedText)
           logthis(green(bold(`[SQL] The Local Database has been loaded.`)))
         //}
       })
+    })
       return;
+
     } else if (serverID == `555171631539028000`) {
       LoadNBAChatDatabase().then(() => {
         LoadAboutEmbedDatabase();
         LoadNBACScoreCmdData();
+        LoadDailySchedule();
         var embedTitle = `Database Interaction`;
         var embedText = `The NBAC Database has been loaded for this server.`
         SendEmbedResp(message, embedTitle, embedText)
         logthis(green(bold(`[SQL] The NBA Chat Database has been loaded.`)))
       })
+
       return;
     } else {
-      if (container.WhichServer !== 'LOCAL' || container.WhichServer !== 'NBAC') {
+      if (container.WhichServer !== 'Local' || container.WhichServer !== 'NBAC') {
         var errormsg = 'The Database has failed to load'
         ReturnEmbedErrorResp(errormsg)
       }

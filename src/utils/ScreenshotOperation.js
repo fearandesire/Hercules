@@ -14,10 +14,10 @@ import {
 } from '../lib/hercConfig.js';
 import {
   ReturnScheduleEmbedErrorResp
-} from './SQL/Embeds/ErrorReplyEmbed.js';
+} from './Send Embeds/ErrorReplyEmbed.js';
 import {
   SendEmbedRespToChannel
-} from './SQL/Embeds/SendEmbed.js';
+} from './Send Embeds/SendEmbed.js';
 export const app = express();
 app.listen(4006, () =>
   console.log('App listening on port 4006!'),

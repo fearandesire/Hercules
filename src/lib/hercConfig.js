@@ -3,8 +3,7 @@ export {
     RateLimitManager
 } from '@sapphire/ratelimits';
 export {
-    blue,
-    bold,
+    blue, blueBright, bold,
     cyan,
     cyanBright,
     green,
@@ -85,17 +84,15 @@ container.dailyGameSS = new CronJobManager();
  Currently the Game Schedule operation has been optimized and the VPS running Hercules has received a CPU upgrade to support the increasing demand of the bot.
  During the next regular season, Hercules will have to be monitored to see if it will need another CPU upgrade.
  */
-export const GameScheduleTime = `0 6 * * *`;
-export const StandingsSSTime = `35 5 * * *`;
-export const SSTodaysGames = `30 5 * * *`;
-export const ScheduleVerifyTime = `05 03 * * *`;
-
 
 //export const validateSchTime = '00 00 * * *';
 /* ------------------------------------------------------------------------------------------------------------------------------------------------ */
 
 //* Validity of today's Game Schedule Image collection »»»»»»»»»»»» */
 container.scheduleValidated = 'false';
+
+//* Validity of Game Schedule being completed »»»»»»»»»»»» */
+container.scheduleCompleted = 'false';
 
 //* ARRAY THAT WILL CONTAIN THE LIST OF GAME'S SCHEDULED TODAY »»»»»»»»»»»»»»»»»»»»»»»»»»»»»» */
 container.gameSchedList = [];
@@ -115,7 +112,6 @@ container.OBJCrgameSched = {};
 //? Container for the Game Count OBJ
 container.OBJgameSched = {};
 //? Check for: Server Database
-//*---*/
 container.WhichServer = '';
 export const serverlocalornot = container.WhichServer;
 
