@@ -2,6 +2,7 @@ import {
   container
 } from '@sapphire/pieces';
 import express from 'express';
+import now from 'performance-now';
 import puppeteer from 'puppeteer';
 import {
   SapDiscClient
@@ -12,12 +13,14 @@ import {
   logthis,
   magentaBright
 } from '../lib/hercConfig.js';
+import { LogBorder, LogCyan } from './ConsoleLogging.js';
+import { ReturnPerformance } from './PerformanceLogger.js';
 import {
   ReturnScheduleEmbedErrorResp
-} from './SQL/Embeds/ErrorReplyEmbed.js';
+} from './Send Embeds/ErrorReplyEmbed.js';
 import {
   SendEmbedRespToChannel
-} from './SQL/Embeds/SendEmbed.js';
+} from './Send Embeds/SendEmbed.js';
 export const app = express();
 app.listen(4006, () =>
   console.log('App listening on port 4006!'),
@@ -30,6 +33,8 @@ app.listen(4006, () =>
  */
 
 export async function screenshotTodaysNBAGames(SSTodaysGames, msg) {
+  //? Performance Stats
+  const start = now();
   async function SendSuccessfulEmbed() {
     var bChannel = container.dbVal[`botChannel`]
     var embedTitle = 'Daily Game Schedule'
@@ -66,12 +71,13 @@ export async function screenshotTodaysNBAGames(SSTodaysGames, msg) {
         'path': '../src/gameimages/tgnba.jpg',
       });
       await browserSG.close();
-      logthis(cyanBright("Done - Today's NBA schedule has been collected."))
+      LogCyan(`[ScreenshotOperation.js] Screenshot for today's NBA Games has been collected.`);
       SendSuccessfulEmbed();
+      ReturnPerformance(start, 'ScreenshotOperation.js');
       container.scheduleValidated = 'true';
     } catch (error) {
       container.scheduleValidated = 'false';
-      console.log('[DEBUGGING] ERROR when screenshoting game schedule - - Likely there are no Games scheduled today.')
+      LogBorder(`[ScreenshotOperation.js] Error: No games were found for today.`)
       var bChannel = container.dbVal[`botChannel`]
       var embedText = 'There are no NBA Games on the schedule today. Schedule Image will be unavailable.'
       const chan = await SapDiscClient.channels.fetch(bChannel)

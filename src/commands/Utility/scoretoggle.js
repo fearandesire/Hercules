@@ -1,5 +1,5 @@
 import { Command } from '@sapphire/framework';
-import { ModScoreSQL } from '../../utils/ModifyScoreSQL.js';
+import { ModScoreSQL } from '../../utils/SQL/ModifyScoreSQL.js';
 export class scoretoggle extends Command {
 constructor(context, options) {
 super(context, {

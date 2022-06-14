@@ -3,9 +3,7 @@ import {
 } from '@sapphire/framework';
 import fs from "fs";
 import fetch from "node-fetch";
-import {
-    AddToUsageStats
-} from '../../utils/SQL/AddToUsageStats.js';
+import { statcord } from '../../Hercules.js';
 export class ManualScreenshot extends Command {
     constructor(context, options) {
         super(context, {
@@ -21,9 +19,8 @@ export class ManualScreenshot extends Command {
         //* -------------- */
         //* Adding to usage stats
         var userid = message.author.id
-        var SQLTargetTable = `manualscreenshotstats`
         var commandname = `manualscreenshot`
-        AddToUsageStats(userid, SQLTargetTable, commandname)
+        statcord.postCommand(commandname, userid)
         //* -------------- */
         const tgdata = await args.pick("string").catch(() => null);
         var mgresponse = await fetch(tgdata);

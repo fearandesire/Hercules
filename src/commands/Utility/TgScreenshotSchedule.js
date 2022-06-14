@@ -2,9 +2,9 @@
 import {
   Command, container
 } from '@sapphire/framework';
-import { bold, green, logthis, noDbLoadedMsg, SSTodaysGames } from '../../lib/hercConfig.js';
+import { bold, green, logthis, noDbLoadedMsg } from '../../lib/hercConfig.js';
 import { screenshotTodaysNBAGames } from '../../utils/ScreenshotOperation.js';
-import { SendEmbedErrorResp } from '../../utils/SQL/Embeds/ErrorReplyEmbed.js';
+import { SendEmbedErrorResp } from '../../utils/Send Embeds/ErrorReplyEmbed.js';
 import { VerifyDatabase } from '../../utils/VerifyDatabase.js';
 
 export class QueGameScheduleScreenshot extends Command {
@@ -19,7 +19,7 @@ export class QueGameScheduleScreenshot extends Command {
   }
 
   async messageRun(message) {
-
+    const SSTodaysGames = container.dbVal[`SSTodaysGames`]   
     var serverlocalornot = container.WhichServer;
     if (VerifyDatabase() == 'No Database is loaded') {
       logthis(green(bold(serverlocalornot)))

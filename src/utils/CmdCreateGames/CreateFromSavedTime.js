@@ -4,7 +4,7 @@ import {
 import {
   SapDiscClient
 } from '../../Hercules.js';
-import { SendEmbedResp } from '../SQL/Embeds/SendEmbed.js';
+import { SendEmbedResp } from '../Send Embeds/SendEmbed.js';
 
 /**
  * @CreateFromSavedTime function: If $creategame has already been used, this provides a QoL feature to type 'last' as the time input to match the previous.

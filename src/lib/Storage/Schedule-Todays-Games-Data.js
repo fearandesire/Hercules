@@ -19,23 +19,3 @@ export { RightNow };
 export const daysInTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 export const TodayDayOfWeek = daysInTheWeek[timestamp.getDay()];
 container.TodayDayOfWeek = TodayDayOfWeek
-
-// export {
-//     timestamp,
-//     nbagamehours,
-//     gameobj,
-//     nbagameinfo,
-//     gameSchedList,
-//     gameArrayDelete,
-//     LineupResponse,
-//     currentminutes,
-//     currenthour,
-//     currentseconds,
-//     parseSecondsv2,
-//     parsedMinutes,
-//     SixSecondsAheadv2,
-//     RightNowv3,
-//     daysInTheWeek,
-//     TodayDayOfWeek
-    
-//     }

@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import { SendEmbedResp } from './SQL/Embeds/SendEmbed.js';
+import { SendEmbedResp } from './Send Embeds/SendEmbed.js';
 export async function WhatsNewGithubCall(message){
 const accessGithub = async () => {
     const GithubBrowser = await puppeteer.launch({

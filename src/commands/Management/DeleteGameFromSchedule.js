@@ -4,15 +4,9 @@ import {
 import {
   container
 } from '@sapphire/pieces';
-import {
-  bold,
-  green,
-  logthis,
-  red
-} from "../../lib/hercConfig.js";
-import {
-  AddToUsageStats
-} from '../../utils/SQL/AddToUsageStats.js';
+import { statcord } from "../../Hercules.js";
+import { LogGreen, LogYellow } from "../../utils/ConsoleLogging.js";
+import { SendErrorEmbed } from "../../utils/Send Embeds/ErrorReplyEmbed.js";
 const OBJgameSched = container.OBJgameSched
 const GameScheduleManager = container.hercGameSchedMngr;
 export class DeleteScheduledGame extends Command {
@@ -27,20 +21,25 @@ export class DeleteScheduledGame extends Command {
   }
 
   async messageRun(message, args) {
+    const text = await args.rest('string').catch(() => null);
+    if (text === undefined){
+      SendErrorEmbed(message, 'You must specify a game via index to delete. For help, type $help manage')
+      return;
+    }
     //* -------------- */
     //* Adding to usage stats
     var userid = message.author.id
-    var SQLTargetTable = `deletegamefromschedulestats`
-    var commandname = `deleteq`
-    AddToUsageStats(userid, SQLTargetTable, commandname)
+    var commandname = `deletescheduledgame`
+    statcord.postCommand(commandname, userid)
     //* -------------- */
-    const text = await args.rest('string').catch(() => null);
+
+
     var selectedScheduledGame = OBJgameSched[`${text}`]
-    logthis(red(bold(`[Game Scheduling] Removing: ${selectedScheduledGame} from the Game Schedule`)))
+    LogYellow(`[Game Scheduling] Removing: ${selectedScheduledGame} from the Game Schedule`)
     try {
       message.reply(`Deleted: '${selectedScheduledGame}' from today's channel scheduling.`)
       GameScheduleManager.deleteJob(selectedScheduledGame)
-      logthis(green(bold(`[Game Scheduling] Successfully removed ${selectedScheduledGame} from the Game Schedule.`)))
+      LogGreen(`[Game Scheduling] Successfully removed ${selectedScheduledGame} from the Game Schedule.`)
     } catch (error) {
       console.log(error)
       return

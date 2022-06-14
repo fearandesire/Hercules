@@ -4,7 +4,7 @@ import {
 import {
     SapDiscClient
 } from '../../Hercules.js';
-import { SendEmbedResp } from '../SQL/Embeds/SendEmbed.js';
+import { SendEmbedResp } from '../Send Embeds/SendEmbed.js';
 export function CreateFromScheduledTime(message, args, GameCount, GameChanMsg, team1, team2, time) {
     //console.log(LGT2)
     const isCrRan = container.crRan;

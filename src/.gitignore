@@ -12,6 +12,7 @@ prisma/
 /gameimages
 botavatar.png
 v2.00 release notes.md
+/deprecated
 npm-debug.log*  
 yarn-debug.log*
 yarn-error.log*
