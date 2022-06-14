@@ -5,12 +5,7 @@ import {
   container
 } from '@sapphire/pieces';
 import { statcord } from "../../Hercules.js";
-import {
-  bold,
-  green,
-  logthis,
-  red
-} from "../../lib/hercConfig.js";
+import { LogGreen, LogRed } from "../../utils/ConsoleLogging.js";
 const OBJCrgameSched = container.OBJCrgameSched
 const GameScheduleManager = container.hercGameSchedMngr;
 export class DeleteScheduledGame extends Command {
@@ -34,11 +29,11 @@ export class DeleteScheduledGame extends Command {
 
     const text = await args.rest('string').catch(() => null);
     var selectedScheduledGame = OBJCrgameSched[`${text}`]
-    logthis(red(bold(`[Game Scheduling] Removing: ${selectedScheduledGame} from the Game Schedule`)))
+    LogRed(`[Game Scheduling] Removing: ${selectedScheduledGame} from the Game Schedule`)
     try {
       message.reply(`Deleted: '${selectedScheduledGame}' from today's channel scheduling.`)
       GameScheduleManager.deleteJob(selectedScheduledGame)
-      logthis(green(bold(`[Game Scheduling] Successfully removed ${selectedScheduledGame} from the Game Schedule.`)))
+      LogGreen(`[Game Scheduling] Successfully removed ${selectedScheduledGame} from the Game Schedule.`)
     } catch (error) {
       console.log(error)
       return

@@ -4,13 +4,14 @@ For a clean, visual list of what is upcoming and more: (click here!)[https://git
 
 ## v2.1.0 ##
 
-**__PLANNED, NOT YET RELEASED/FINISHED**__
+📝 Summary: Usage Stats, 
 
-:notepad_spiral: Summary: Usage Stats, 
-
-- Initation of performance stats
-- Organized files & broke up LoadGames.js into several files
-- Removed unused variable & code
+- Adjustable Daily Schedule Timers with new command $adjustTimers - [Crossed off roadmap!](https://github.com/fearandesire/Hercules/issues/4)
+- Daily Scheduling functions moved to within ```$ld``` command or ```LoadDatabase.js```
+- Cleaned up terminal responses in several command (Backend)
+- Organized files & broke up LoadGames.js into several files - [Crossed off roadmap!](https://github.com/fearandesire/Hercules/issues/6)
+- Implemented performance stats - [Crossed off roadmap!](https://github.com/fearandesire/Hercules/issues/3)
+- Removed unused variable & code (Backend)
 - Schedule verification for ```$qs``` and ```$ls``` commands
 - Usage Stats re-worked using StatsBot
  - Now tracking usage stats on all common commands
@@ -19,7 +20,7 @@ For a clean, visual list of what is upcoming and more: (click here!)[https://git
 
 ## v2.0.5 ## 
 
-:notepad_spiral: Summary: Minor update & bug fixing
+📝 Summary: Minor update & bug fixing
 
 - [#1](https://github.com/fearandesire/Hercules/issues/1) Schedule Timers uploaded into SQL DB, opening the bridge for on-the-fly adjustment with some further coding.
 - [#2](https://github.com/fearandesire/Hercules/issues/2) Schedule verification for $qg and $ls

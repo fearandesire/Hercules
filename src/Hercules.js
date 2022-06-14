@@ -7,14 +7,9 @@ import {
 } from '@sapphire/ratelimits';
 import 'dotenv/config';
 import Statcord from "statcord.js";
-import {
-  bold,
-  green,
-  logthis,
-  yellowBright
-} from './lib/hercConfig.js';
+import { LogGreen, LogYellow } from './utils/ConsoleLogging.js';
 
-console.log(yellowBright(bold(`[Startup]: Launching Hercules`)))
+LogYellow(`[Startup]: Launching Hercules`)
 
 //? Sapphire Framework -> Client Setup
 const SapDiscClient = new SapphireClient({
@@ -43,7 +38,7 @@ const statcord = new Statcord.Client({
 async function LoginHercules() {
   const envTOKEN = process.env.TOKEN
   SapDiscClient.login(envTOKEN)
-  logthis(green(`[Startup] Hercules is now online!`))
+  LogGreen(`[Startup]: Hercules is now logged into Discord & online!`)
 }
 LoginHercules();
 

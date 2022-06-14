@@ -29,7 +29,7 @@ import { QueDeleteChannels } from './ScheduleToday/QueDeleteChannels.js';
 import { QueGameChannels } from './ScheduleToday/QueGameChannels.js';
 let CountNBAGames = parseInt(0);
 const gameSchedList = container.gameSchedList
-
+//? Performance Stats Counter
 /**
 //? THE VARIABLES MASON, WHAT DO THEY MEAN!?
 - @ScheduleTodayNBAGames - function that will receive the scraped data and use said data to que the Game Channels & auto-delete times of the Game Channels
@@ -100,13 +100,14 @@ export function ScheduleTodaysNBAGames(HomeAndAwayTeamsObject) {
     //// var predictorIdHomeTeam = predictorTeamIDs[HomeTeam] || "(not found)";
     //// var predictorIdHAwayTeam = predictorTeamIDs[AwayTeam] || "(not found)";
     //// LineupResponse.push(`<@582334440588443816> ac 1 ${predictorIdHomeTeam} ${predictorIdHAwayTeam}`)
-
+    
     //* QUEUING GAME CHANNELS »»»» */
     QueGameChannels(gameparent, GameChanTopic, CronGameTime, ServerCache, HomeTeam, AwayTeam, startsAt)
 
     //* QUEUING GAME DELETE TIMES »»»» */
     QueDeleteChannels(gcArrayTitle, gamemngr, gamedeletemngr, LowerCaseTitle, ServerCache, DeleteTime)
-    //? End of For In Loop
+
+  //* END OF LOOP »»»» */
   }
 
   //* SENDING THE SCHEDULE EMBED »»»» */

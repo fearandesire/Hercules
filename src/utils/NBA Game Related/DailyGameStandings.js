@@ -2,13 +2,18 @@ import {
   container
 } from '@sapphire/pieces';
 import express from 'express';
+import now from 'performance-now';
 import puppeteer from 'puppeteer';
+
 import {
   cborder,
   cyanBright,
   logthis,
   magentaBright
 } from '../../lib/hercConfig.js';
+import {
+  ReturnPerformance
+} from '../PerformanceLogger.js';
 import {
   SendEmbedRespToChannel
 } from '../Send Embeds/SendEmbed.js';
@@ -18,12 +23,14 @@ app.listen(4005, () =>
 );
 //? Loads the cron manager for daily standings
 const dailyStandingsManager = container.dailyStandings;
+//? Performance Stats Counter
 export async function dailystandings(StandingsSSTime) {
+  //? Performance Stats
+  const start = now();
   dailyStandingsManager.add("Daily Standings", StandingsSSTime, () => {
     logthis(
       magentaBright(
         cborder));
-    // logthis(cyanBright("Started the daily standings gathering."))
     logthis(cyanBright("Collecting current NBA Standings"));
     //* opens ESPN Standings page
     const standingasync = async () => {
@@ -63,9 +70,10 @@ export async function dailystandings(StandingsSSTime) {
       async function SendGameStandingsComplete() {
         var bChannel = container.dbVal[`botChannel`]
         var embedTitle = 'Daily Standings'
-        var embedText = 'NBA Standings downloaded. To view: $standings, $standings west, $standings east'
+        var embedText = 'NBA Standings downloaded. To view, type: $standings, $standings west, $standings east'
         var targetChannel = bChannel
         SendEmbedRespToChannel(embedTitle, embedText, targetChannel)
+        ReturnPerformance(start, 'DailyGameStandings')
         return;
       }
       SendGameStandingsComplete();

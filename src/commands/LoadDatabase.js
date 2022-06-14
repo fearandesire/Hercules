@@ -5,11 +5,7 @@ import {
 import {
   container
 } from '@sapphire/pieces';
-import {
-  bold,
-  green,
-  logthis
-} from '../lib/hercConfig.js';
+import { LogGreen, LogRed } from '../utils/ConsoleLogging.js';
 
 import {
   ReturnEmbedErrorResp
@@ -65,7 +61,7 @@ export class LoadDatabase extends Command {
           var embedTitle = `Database Interaction`;
           var embedText = `The Local Database has been loaded for this server.`
           SendEmbedResp(message, embedTitle, embedText)
-          logthis(green(bold(`[SQL] The Local Database has been loaded.`)))
+          LogGreen(`[LoadDatabase.js] The Local Database has been loaded.`)
         //}
       })
     })
@@ -79,7 +75,7 @@ export class LoadDatabase extends Command {
         var embedTitle = `Database Interaction`;
         var embedText = `The NBAC Database has been loaded for this server.`
         SendEmbedResp(message, embedTitle, embedText)
-        logthis(green(bold(`[SQL] The NBA Chat Database has been loaded.`)))
+        LogGreen(`[LoadDatabase.js] The NBA Chat Database has been loaded.`)
       })
 
       return;
@@ -87,6 +83,7 @@ export class LoadDatabase extends Command {
       if (container.WhichServer !== 'Local' || container.WhichServer !== 'NBAC') {
         var errormsg = 'The Database has failed to load'
         ReturnEmbedErrorResp(errormsg)
+        LogRed(`[LoadDatabase.js] The Database has failed to load.`)
       }
       return;
     }
