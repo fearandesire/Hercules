@@ -1,6 +1,6 @@
 <h1 align="center"><b>Change Log</b></h1>
 
-For a clean, visual list of what is upcoming and more: (click here!)[https://github.com/users/fearandesire/projects/3]
+For a clean, visual list of what is upcoming and more: [click here!](https://github.com/users/fearandesire/projects/3)
 
 ## v2.1.0 ##
 

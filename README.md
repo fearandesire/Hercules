@@ -49,11 +49,11 @@ For details on each file and their purpose - please review the full [About Page]
 
 ## :sparkles: Current Roadmap ##
 
-Progress will be reflected in the Change Log. Finished milestones will be removed from this list.
+The list below will be a brief overview of the main planned features.
+For a full overview, please view my [Hercules Project!](https://github.com/users/fearandesire/projects/3)
 
 - Retrieve Player & Team Record Stats on-demand
-- External Score Command (for channels outside of the game channel)
-- Website that displays the usage stats // Hercules website
+- External Score Command (for channels outside the game channel)
 
 ## Statistics: ##
 
@@ -62,7 +62,6 @@ Hercules will capture usage stats for the common commands/functions such as but 
 - Score
 - Today's Games (Viewing schedule with ($tg, $todaysgames)
 - Create Games
-- Manual Schedule Screenshot ($mg, $ms)
 - Standings
 
 
@@ -81,7 +80,7 @@ You can view the [Change Log here](ChangeLog.md)
 
 ## :checkered_flag: Starting ##
 
-These notes are mainly intended for fellow staff at NBAC for the future & beyond.
+This process is mainly noted for fellow NBA Chat staff.
 
 1. After downloading the latest [Release](https://github.com/fearandesire/Hercules/releases), please do the following:
 
@@ -95,9 +94,9 @@ These notes are mainly intended for fellow staff at NBAC for the future & beyond
   - SQLPass
   - SQLPort
 
-4. Run: Hercules.js
+4. **Run:** ```Hercules.js``` with either node.js or your own option.
 
-5. After turning Hercules on, please use the ```$ld``` command (load database) to properly acquire the settings needed to use the bot.
+5. After turning Hercules on, please use the ```$ld``` command (load database) to acquire the settings & info for the NBAC Server. This is required
 
 ## :memo: License ##
 
