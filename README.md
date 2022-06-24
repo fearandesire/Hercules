@@ -1,5 +1,5 @@
 <div align="center" id="top"> 
-  <img src="https://media.discordapp.net/attachments/932065347295645706/932069288704102450/NBA_Chat_Logo_Animated.gif" alt="NBAC LOGO" />
+  <img src="https://i.imgur.com/3ITeih6.gifv" alt="NBAC LOGO" />
 
   &#xa0;
 
