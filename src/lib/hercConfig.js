@@ -37,18 +37,20 @@ export {
 export {
     Pagination
 };
-    import {
-        container
-    } from '@sapphire/framework';
-    import '@sapphire/plugin-hmr/register';
-    import {
+
+import '@sapphire/plugin-hmr/register';
+
+import CronJobManager from 'cron-job-manager';
+import Pagination from "discord-embed-pagination";
+import {
         RateLimitManager
-    } from "@sapphire/ratelimits";
-    import CronJobManager from 'cron-job-manager';
-    import Pagination from "discord-embed-pagination";
-    import {
+} from "@sapphire/ratelimits";
+import {
         StorageNBATeams
-    } from "./Storage/NBATeamLists.js";
+} from "./Storage/NBATeamLists.js";
+import {
+        container
+} from '@sapphire/framework';
 
 export const NBATeams = StorageNBATeams.NBATeams
 export const NBATeamsNickNames = StorageNBATeams.NBATeamsNickNames
@@ -131,7 +133,7 @@ export const HercScheduleEmbed = "https://cdn.nba.com/manage/2021/09/USATSI_1684
 export const herculeslogo = "https://cdn.discordapp.com/attachments/515598020818239491/975854840217501737/HerculesLogo-PFP.png?size=4096"
 export const herculesfulllogo = 'https://cdn.discordapp.com/attachments/515598020818239491/975843360453578852/HerculesLogo.png?size=4096'
 export const nbaclogo =
-    "https://cdn.discordapp.com/attachments/515598020818239491/981652760325922836/NBACPrideLogo.gif?size=4096";
+    "https://i.imgur.com/3ITeih6.gif";
 
 // cr values 2
 export const crRan = 'false'
